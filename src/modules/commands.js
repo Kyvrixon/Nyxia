@@ -32,12 +32,13 @@ export default async (client) => {
                 const commandModule = await import("file://" + filePath);
                 const command = commandModule.default;
                 if (command.data && command.init) {
-                    if (!command.desc) {
-                        command.desc = "No description for this command"
+                    if (typeof command.dev !== 'boolean') {
+                        command.dev = false;
                     }
-                    if (!command.category) {
-                        command.category = "Miscellaneous";
+                    if (typeof command.owner !== 'boolean') {
+                        command.owner = false;
                     }
+
                     client.commands.set(command.data.name, command);
                     commands.push(command.data.toJSON());
                     count++;
@@ -60,12 +61,12 @@ export default async (client) => {
             //const emptyArray = [];
             if (process.env.production) {
                 await rest.put(
-                    Routes.applicationCommands(process.env.BOT_ID),
+                    Routes.applicationCommands("1309736362454421505"),
                     { body: commands }
                 );
             } else if (!process.env.production) {
                 await rest.put(
-                    Routes.applicationGuildCommands(process.env.BOT_ID, "1125196330646638592"),
+                    Routes.applicationGuildCommands("1309736362454421505", "1125196330646638592"),
                     { body: commands }
                 );
             }
