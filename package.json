@@ -1,0 +1,18 @@
+{
+  "name": "nyxia-rewrite",
+  "description": "The rewrite for Nyxia!",
+  "author": "Dreamwxve",
+  "version": "ALPHA",
+  "main": "./src/bot.js",
+  "type": "module",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "chalk": "^5.3.0",
+    "colors": "^1.4.0",
+    "discord.js": "^14.16.3",
+    "dotenv": "^16.4.7",
+    "mongoose": "^8.8.4",
+    "node-cron": "^3.0.3",
+    "riffy": "^1.0.7-rc.2"
+  }
+}
