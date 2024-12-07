@@ -3,6 +3,7 @@ import {
 } from "discord.js";
 import { errEmbed } from "../../utils/embeds.js";
 import Logger from "../../utils/logger.js"
+import { intCache } from "../../bot.js";
 
 export default {
 	name: "interactionCreate",

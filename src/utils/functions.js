@@ -175,8 +175,9 @@ export const createLeaderboard = async (title, txt, interaction, pageCount = 10,
         const rowDisable = new Discord.ActionRowBuilder().addComponents(
             createButton("expired_button", "This component has expired!", true),
         );
-
-        await msg.edit({ components: extra_components ? [rowDisable, extra_components] : [rowDisable] });
+        try {
+            await msg.edit({ components: extra_components ? [rowDisable, extra_components] : [rowDisable] });
+        } catch {}
     });
 };
 
