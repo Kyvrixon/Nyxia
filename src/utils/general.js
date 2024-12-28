@@ -7,7 +7,7 @@ export const permissions = [
     PermissionFlagsBits.ChangeNickname,
     PermissionFlagsBits.Connect,
     PermissionFlagsBits.CreateEvents,
-    //PermissionFlagsBits.CreateGuildExpressions,
+    PermissionFlagsBits.CreateGuildExpressions,
     PermissionFlagsBits.CreateInstantInvite,
     PermissionFlagsBits.CreatePrivateThreads,
     PermissionFlagsBits.CreatePublicThreads,
@@ -17,7 +17,7 @@ export const permissions = [
     PermissionFlagsBits.ManageChannels,
     PermissionFlagsBits.ManageEvents,
     PermissionFlagsBits.ManageGuild,
-    //PermissionFlagsBits.ManageGuildExpressions,
+    PermissionFlagsBits.ManageGuildExpressions,
     PermissionFlagsBits.ManageMessages,
     PermissionFlagsBits.ManageNicknames,
     PermissionFlagsBits.ManageRoles,
@@ -44,9 +44,22 @@ export const permissions = [
     //PermissionFlagsBits.UseExternalSounds,
     PermissionFlagsBits.UseExternalStickers, 
     //PermissionFlagsBits.UseSoundboard, 
-    //PermissionFlagsBits.UseVAD, 
+    //PermissionFlagsBits.UseVAD,
     PermissionFlagsBits.ViewAuditLog,
     PermissionFlagsBits.ViewChannel,
     //PermissionFlagsBits.ViewCreatorMonetizationAnalytics,
     //PermissionFlagsBits.ViewGuildInsights
 ];
+
+export const userFlagValues = [
+    "dev", 
+    "mod",
+    "staff",
+    "valued",
+    "premium"
+]
+
+export default {
+    permissions,
+    userFlagValues
+}

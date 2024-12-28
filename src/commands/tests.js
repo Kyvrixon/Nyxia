@@ -16,17 +16,6 @@ export default {
                 .setName('lb')
                 .setDescription('description')
         )
-        .addSubcommand(subcommand =>
-            subcommand
-                .setName('listcmds')
-                .setDescription('description')
-
-                .addIntegerOption(x => x
-                    .setName("number")
-                    .setDescription("(optional) Results per page, default is 5")
-                    .setRequired(false)
-                )
-        )
         
         .addSubcommand(subcommand =>
             subcommand

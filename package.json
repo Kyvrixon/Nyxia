@@ -1,6 +1,6 @@
 {
   "name": "nyxia",
-  "author": "Dreamwxve",
+  "author": "Kyvrixon",
   "version": "development",
   "main": "./src/bot.js",
   "type": "module",

@@ -18,28 +18,22 @@ export const errEmbed = (message, e, s, title = "Oops.. something went wrong") =
     	code += characters.charAt(Math.floor(Math.random() * characters.length));
     }
     
-    const embedReply = new EmbedBuilder()
-        .setColor(e ? "Red" : "Orange")
+	const embedReply = new EmbedBuilder()
+		.setColor(e ? "Red" : "Orange")
 		.setTitle(title)
 		.setDescription(`> ${message}`)
-		.setFooter(footer())
+		.setFooter(footer());
 
-		if (e && s) {
-			embedReply.setDescription(`\`\`\`\n${message}\`\`\``)
-			embedReply.setAuthor({name: "Unique error ID: " + code})
-			embedReply.addFields(
-				{
-					name: "__So, what to do now?__",
-					value: "> If this error really impacts the functionality of this command please join our support server by clicking below, open a ticket and share the **Unique error ID** for the dev to further help!",
-					inline: true
-				},
-				{
-					name: "__Please note__",
-					value: "> Depending on severity, a dev may join the server to further investigate the nature of this error! Please provide any permissions they may request.\n*You can also check if a user is a genuine dev of me by running \`/auth-check\`*",
-					inline: true
-				}
-			);
-		}
+	if (e && s) {
+		embedReply
+			.setDescription(`\`\`\`\n${message}\`\`\``)
+			.setAuthor({ name: `Error ID: ${code}` })
+			.addFields({
+				name: "__Error Help__",
+				value: "> If the error affects functionality, join our support server, open a ticket, and share the **Error ID**. A dev may join to investigate, please grant necessary permissions they request. Use `/auth-check` to verify their identity first.",
+				inline: false
+			});
+	}
 
 		sendLog(e, s);
 		return embedReply;
@@ -55,28 +49,28 @@ export const errEmbed = (message, e, s, title = "Oops.. something went wrong") =
 		if (source instanceof CommandInteraction) {
 			let group = null, sub = null;
 			try {
-				group = interaction.options.getSubcommandGroup();
+				group = source.options.getSubcommandGroup();
 			} catch {
 				group = null;
 			}
 			try {
-				sub = interaction.options.getSubcommand();
+				sub = source.options.getSubcommand();
 			} catch {
 				sub = null;
 			}
-
+		
 			const commandInfo = {
 				subcommandGroup: group,
 				subcommand: sub
 			};
 			cmdValueString = `> \`/${source.commandName} ${commandInfo.subcommandGroup ? `${commandInfo.subcommandGroup} ` : ''}${commandInfo.subcommand || ''}\``;
-
+		
 		} else if (source instanceof ContextMenuCommandInteraction) {
 			cmdValueString = `> \`/${source.commandName}\``;
-
+		
 		} else if (source instanceof ModalSubmitInteraction) {
 			cmdValueString = `> \`Modal: ${source.customId}\``;
-
+		
 		} else if (
 			source instanceof StringSelectMenuInteraction ||
 			source instanceof UserSelectMenuInteraction ||
@@ -85,13 +79,13 @@ export const errEmbed = (message, e, s, title = "Oops.. something went wrong") =
 			source instanceof ChannelSelectMenuInteraction
 		) {
 			cmdValueString = `> \`Select Menu: ${source.customId}\``;
-
+		
 		} else if (source instanceof ButtonInteraction) {
 			cmdValueString = `> \`Button: ${source.customId}\``;
-
+		
 		} else {
 			cmdValueString = `> \`Unknown Interaction Type\``;
-		}
+		}		
 
 		const embedLog = new EmbedBuilder()
 		.setTitle("An error occurred")
@@ -133,7 +127,7 @@ export const errEmbed = (message, e, s, title = "Oops.. something went wrong") =
 			.addComponents(
 				new ButtonBuilder()
 					.setStyle(ButtonStyle.Link)
-					.setURL(await getInvite(source.guild))
+					.setURL(await getInvite(source.guild, source.channel))
 					.setLabel("Click to join the server")
 			)
 

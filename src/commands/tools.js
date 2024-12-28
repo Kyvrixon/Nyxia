@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from 'discord.js';
+import { SlashCommandBuilder, ChannelType } from 'discord.js';
 import { handleCmd } from "../utils/functions.js";
 import { errEmbed } from "../utils/embeds.js"
 
@@ -23,8 +23,27 @@ export default {
 
         .addSubcommand(subcommand =>
             subcommand
-                .setName('permissions')
-                .setDescription('🔐 Check the permissions of the bot')
+                .setName('list-cmds')
+                .setDescription('🧰 List all the commands for me')
+                .addUserOption(option =>
+                    option.setName('number')
+                        .setDescription('(optional) Number of commands to show per page')
+                        .setRequired(false)
+                )
+        )
+
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('cleanup')
+                .setDescription('🧹 Cleanup messages in the channel')
+                .addUserOption(x => x
+                    .setName("target")
+                    .setDescription("(optional) The user you wish to clean")
+                )
+                .addStringOption(x => x
+                    .setName("amount")
+                    .setDescription("(optional) Amount to delete. Max of 100")
+                )
         )
 ,
     async init(client, interaction) {

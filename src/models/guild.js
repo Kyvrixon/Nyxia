@@ -9,9 +9,10 @@ const guildSchema = new mongoose.Schema(
             isPremium: { type: Boolean }
         },
 
-        config: {
+        configs: {
             general: {
-                main_chat: { type: String },
+                mainChat: { type: String },
+                mainRole: { type: String }
             },
             confess: {
                 channel: { type: String },
