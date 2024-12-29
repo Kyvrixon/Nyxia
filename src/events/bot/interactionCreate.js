@@ -1,47 +1,53 @@
-import {
-	EmbedBuilder
-} from "discord.js";
 import { errEmbed } from "../../utils/embeds.js";
-import Logger from "../../utils/logger.js"
-import { intCache } from "../../bot.js";
+import Logger from "../../utils/logger.js";
+import { handleCmd, devCheck } from "../../utils/functions.js";
 
 export default {
 	name: "interactionCreate",
 	once: false,
 
 	async init(client, interaction) {
-		if (!interaction.isChatInputCommand()) return;
-
-		const command = client.commands?.get(interaction.commandName);
-		if (!command) {
-			return interaction.reply({
-				embeds: [errEmbed("Hmm.. seems like this command does not exist", null, null, "interesting...")],
-				ephemeral: true,
-			});
-		}
+		if (
+			!interaction.isChatInputCommand() ||
+			!client ||
+			!interaction
+		) return;
 
 		try {
-			await command.init(client, interaction);
-		} catch (error) {
-			Logger.error("interactionCreate", error.message, error)
-			const replyOptions = { content: null, embeds: [errEmbed("I did my best but I couldn't find what caused this error :frowning2:", error, interaction)], ephemeral: false };
-			
-			try {
-				if (interaction.replied) {
-					// Interaction has already been replied to
-					await interaction.followUp(replyOptions);
-				} else if (interaction.deferred) {
-					// Interaction has been deferred, but not yet replied
-					await interaction.followUp(replyOptions);
-				} else {
-					// Interaction has not been replied to or deferred yet
-					await interaction.reply(replyOptions);
+			const command = client.commands?.get(interaction.commandName);
+			if (!command) {
+				try {
+					await handleCmd(client, interaction);
+				} catch (e) {
+					Logger.error("interactionCreate", "Failed to initiate command: " + interaction?.commandName, e);
+					return interaction?.channel?.send({
+						embeds: [
+							errEmbed(`Failed to run command ${interaction?.commandName ?? undefined}. Please contact the developer.`, e, interaction, "Failed to initiate command")
+						]
+					})
 				}
-			} catch {
-				await interaction.channel.send({
-					embeds: [errEmbed("I did my best but I couldn't find what caused this error :frowning2:", error, interaction)]
-				});
 			}
+
+			if (command.beta && interaction.guild.id !== "1125196330646638592") {
+				return interaction.reply(
+					{
+						embeds: [
+							errEmbed(
+								"You aren't authorised to use this command",
+								null,
+								interaction,
+								"Unauthorised"
+							)
+						],
+						ephemeral: true
+					}
+				)
+			}
+
+			return await command.init(client, interaction);
+		} catch (error) {
+			if (error.message === "Unknown Message") {};
+			Logger.error("interactionCreate", error.message, error);
 		}
-	},
+	}
 };

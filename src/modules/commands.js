@@ -16,6 +16,7 @@ export default async (client) => {
         let count = 0;
         let errored = 0;
         const commands = [];
+        const betaCommands =[];
         const commandsPath = path.join(__dirname, "..", "commands");
         const readCommandFiles = (dirPath) => {
             return fs.readdirSync(dirPath).filter(file => {
@@ -32,16 +33,18 @@ export default async (client) => {
                 const commandModule = await import("file://" + filePath);
                 const command = commandModule.default;
                 if (command.data && command.init) {
-                    if (typeof command.dev !== 'boolean') {
-                        command.dev = false;
-                    }
-                    if (typeof command.owner !== 'boolean') {
-                        command.owner = false;
-                    }
+
+                    if (command.beta === true) {
+                        betaCommands.push(command.data.toJSON());
+                        client.commands.set(command.data.name, command);
+                        count++;
+                        continue;
+                    };
 
                     client.commands.set(command.data.name, command);
                     commands.push(command.data.toJSON());
                     count++;
+
                 } else {
                     throw new Error('Command is not set up correctly');
                 }
@@ -50,8 +53,8 @@ export default async (client) => {
                 const location = filePath.replace(commandsPath, '').replace(/\\/g, ' > ').replace(/^ > /, '');
                 Logger.warn('Cmd Loader', `"${location}" isn't setup correctly`.red);
                 errored++;
-            }
-        }
+            };
+        };
 
         Logger.info('Cmd Loader', `Loaded ${count.toString().green} of ${commandFiles.length.toString().green} (${errored.toString().red} errored)`);
 
@@ -59,15 +62,15 @@ export default async (client) => {
 
         try {
             //const emptyArray = [];
-            if (process.env.production) {
+            if (!process.env.dev) {
                 await rest.put(
                     Routes.applicationCommands("1309736362454421505"),
                     { body: commands }
                 );
-            } else if (!process.env.production) {
+            } else if (process.env.dev) {
                 await rest.put(
-                    Routes.applicationGuildCommands("1309736362454421505", "1125196330646638592"),
-                    { body: commands }
+                    Routes.applicationGuildCommands(process.env.BOT_ID, "1125196330646638592"),
+                    { body: betaCommands }
                 );
             }
         return;

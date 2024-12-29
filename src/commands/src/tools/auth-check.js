@@ -39,16 +39,16 @@ export default async (client, interaction) => {
     try {
         const data = await model.findOne({
             user: target.id,
-            "flags.common": { $in: ["head_dev", "dev", "assistant"] }
+            "flags.common": { $in: ["manager", "dev", "assistant"] }
         });
         if (!data) {
             return interaction.reply({
                 embeds: [
                     new EmbedBuilder()
-                        .setTitle("User Authority Check")
+                        .setTitle("Authority Check")
                         .setFooter(footer())
-                        .setColor("Orange")
-                        .setDescription("> The user, <@" + target + ">, **does not** have high authority of me!\n\nIf this user is pretending to be a dev or someone similar, I urge you to report this user via `/report`!")
+                        .setColor("Red")
+                        .setDescription("> The user, <@" + target + ">, **does not** have high authority of me!\n\nIf this user is pretending to have authorship over me, I urge you to report this user via `/report`!")
                 ],
                 ephemeral: true,
                 content: null
@@ -58,9 +58,9 @@ export default async (client, interaction) => {
                 embeds: [
                     new EmbedBuilder()
                         .setFooter(footer())
-                        .setTitle("User Authority Check")
+                        .setTitle("Authority Check")
                         .setColor("#89E894")
-                        .setDescription("> The user, <@" + target + ">, **does** have high authority of me!\n\n<@" + target + "> has authority to request stuff related to me such as investigating an error or report!")
+                        .setDescription("> The user, <@" + target + ">, **does** have high authority of me!\n\n<@" + target + "> has authority to request stuff related to me such as investigating an error, report and more!")
                 ],
                 ephemeral: true,
                 content: null

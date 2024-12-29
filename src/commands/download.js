@@ -4,6 +4,7 @@ import { handleCmd } from "../utils/functions.js";
 export default {
     dev: false,
     owner: false,
+    beta: true,
     desc: "Download user or server information from the database",
     category: "Utility",
 

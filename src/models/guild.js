@@ -5,13 +5,14 @@ const guildSchema = new mongoose.Schema(
         guild: { type: String, index: true, required: true },
 
         flags: {
-            isBannedFrom: { type: [String] },
-            isPremium: { type: Boolean }
+            isPremium: { type: Boolean, default: false },
+            isBanned: { type: Boolean, default: false }
         },
 
-        config: {
+        configs: {
             general: {
-                main_chat: { type: String },
+                mainChat: { type: String },
+                mainRole: { type: String }
             },
             confess: {
                 channel: { type: String },
@@ -24,4 +25,4 @@ const guildSchema = new mongoose.Schema(
     }
 );
 
-export default mongoose.model('Guild', guildSchema);
+export default mongoose.model('guild', guildSchema);
