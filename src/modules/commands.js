@@ -64,7 +64,7 @@ export default async (client) => {
             //const emptyArray = [];
             if (!process.env.dev) {
                 await rest.put(
-                    Routes.applicationCommands(process.env.BOT_ID),
+                    Routes.applicationCommands("1309736362454421505"),
                     { body: commands }
                 );
             } else if (process.env.dev) {

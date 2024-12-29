@@ -10,7 +10,7 @@ export default {
     data: new SlashCommandBuilder()
         .setName('tools')
         .setDescription('🧰 Use something in the toolbox')
-
+  
         .addSubcommand(x =>
             x
                 .setName('auth-check')
