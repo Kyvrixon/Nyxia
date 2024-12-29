@@ -28,6 +28,7 @@ export default {
 				}
 			}
 
+			// safeguard incase
 			if (command.beta && interaction.guild.id !== "1125196330646638592") {
 				return interaction.reply(
 					{
