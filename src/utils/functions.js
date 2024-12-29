@@ -417,6 +417,16 @@ export const getEmojiUrl = (name) => {
     }
 };
 
+/**
+ * Convert a new Date() to discord timestamp format.
+ * 
+ * @param {Number} date 
+ * @returns {String} your unix timestamp
+ */
+export const convertToUnix = (date) => {
+    return Math.floor(date / 1000);  
+}
+
 
 //===================
 export default {
@@ -429,5 +439,6 @@ export default {
     checkPermissions,
     isValidColour,
     getEmoji,
-    getEmojiUrl
+    getEmojiUrl,
+    convertToUnix
 }

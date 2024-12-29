@@ -1,6 +1,6 @@
-import userModel from "../../models/user.js";
 import { basicEmbed } from "../../utils/embeds.js";
-import AFK from "../../utils/handlers/afk";
+import AFK from "../../utils/handlers/afk.js";
+import afkHandler from "../../utils/handlers/afkHandler.js";
 
 export default {
 	name: "messageCreate",
@@ -9,46 +9,14 @@ export default {
 	async init(client, message) {
 		if (!message || message.bot || !message.guild) return;
 
-		checkAfk();
-
-
-
-
-
-
-
-
-
-
-
-		async function checkAfk() {
-			const isInAfk = await AFK.check(message.user);
-			if (isInAfk) {
-				try {
-					await message.channel.send(
-						{
-							embeds: [
-								basicEmbed(
-									null,
-									"> Welcome back! Your AFK has been removed!",
-									null,
-									"Green",
-									null,
-									null,
-									null,
-									null,
-									null
-								)
-							]
-						}
-					)
-				} catch { };
-
-				await userModel.updateOne(
-					{ user: message.author.id },
-					{ $unset: { afk: 1 } }
-				);
-			}
+		if (message.content === "ABC123") {
+			await AFK.set(message.author, Date.now(), "testing afk reason message");
+			await message.reply("temp afk set");
+			return;
 		}
+
+		afkHandler(client, message);
+
+
 	}
-}
+};

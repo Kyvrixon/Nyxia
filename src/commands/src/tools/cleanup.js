@@ -46,14 +46,12 @@ export default async (client, interaction) => {
         });
     }
 
-    if (amount !== 0) {
-        amount = 100;
-    }
+    console.log(amount)
 
     await interaction.reply({
         embeds: [
             basicEmbed(
-                undefined,
+                null,
                 "> Cleaning messages...",
                 null,
                 null,
