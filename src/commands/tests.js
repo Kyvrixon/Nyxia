@@ -17,14 +17,14 @@ export default {
                 .setName('lb')
                 .setDescription('description')
         )
-        
+
         .addSubcommand(subcommand =>
             subcommand
                 .setName('error')
                 .setDescription('description')
         )
-        
-,
+
+    ,
     async init(client, interaction) {
         try {
             await handleCmd(client, interaction);

@@ -12,13 +12,13 @@ export default {
     data: new SlashCommandBuilder()
         .setName('config')
         .setDescription('⚙️ Modify configurations')
-        
+
         .addSubcommand(subcommand =>
             subcommand
                 .setName('view')
                 .setDescription('⚙️ View the current configurations')
         )
-, 
+    ,
     async init(client, interaction) {
         try {
             await handleCmd(client, interaction);

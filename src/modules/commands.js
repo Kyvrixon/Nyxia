@@ -16,7 +16,7 @@ export default async (client) => {
         let count = 0;
         let errored = 0;
         const commands = [];
-        const betaCommands =[];
+        const betaCommands = [];
         const commandsPath = path.join(__dirname, "..", "commands");
         const readCommandFiles = (dirPath) => {
             return fs.readdirSync(dirPath).filter(file => {
@@ -73,7 +73,7 @@ export default async (client) => {
                     { body: betaCommands }
                 );
             }
-        return;
+            return;
 
         } catch (error) {
             console.log(error)

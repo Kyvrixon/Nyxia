@@ -27,7 +27,7 @@ export default async (client, interaction) => {
             )
         ]
     })
-    
+
     let config;
     const guildData = await guildModel.findOne({ guild: interaction.guild.id });
     if (!guildData) {
@@ -45,24 +45,24 @@ export default async (client, interaction) => {
     const listArray = [];
     let general = "";
     let confessions = "";
-    
+
     // build entries
-        general =
-            "## General\n"+
-            `**Main chat:** ${config.general?.mainChat ? `<#${config.general?.mainChat}>` : "`Not set`"}\n` +
-            `**Main role:** ${config.general?.mainRole ? `<@&${config.general?.mainRole}>` : "`Not set`"}\n` +
-            `**Timezone:** ${config.general.timezone ?? "`Not set`"}\n`
+    general =
+        "## General\n" +
+        `**Main chat:** ${config.general?.mainChat ? `<#${config.general?.mainChat}>` : "`Not set`"}\n` +
+        `**Main role:** ${config.general?.mainRole ? `<@&${config.general?.mainRole}>` : "`Not set`"}\n` +
+        `**Timezone:** ${config.general.timezone ?? "`Not set`"}\n`
         ;
 
-        confessions =
-            "## Confessions\n"+
-            `**Channel:** ${config?.confessions?.channel ? `<#${config.confessions.channel}>` : "`Not set`"}\n` +
-            `**Log Channel:** ${config.confessions?.log ? `<#${config.confessions.log}>` : "`Not set`"}\n`
+    confessions =
+        "## Confessions\n" +
+        `**Channel:** ${config?.confessions?.channel ? `<#${config.confessions.channel}>` : "`Not set`"}\n` +
+        `**Log Channel:** ${config.confessions?.log ? `<#${config.confessions.log}>` : "`Not set`"}\n`
         ;
 
-        listArray.push(general, confessions);
+    listArray.push(general, confessions);
 
-        await delay(Math.floor(Math.random() * 10) + 1);
+    await delay(Math.floor(Math.random() * 10) + 1);
 
     return await createLeaderboard("Current Configurations", listArray, interaction, 1);
 }

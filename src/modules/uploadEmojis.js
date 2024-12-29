@@ -82,19 +82,19 @@ export default async (client) => {
     }
 
     const response1 = await fetch(`https://discord.com/api/v10/applications/${process.env.BOT_ID}/emojis`, {
-        headers: {
-          Authorization: `Bot ${process.env.BOT_TOKEN}`,
-        },
-      });
-  
-      if (!response1.ok) {
-        const error = await response1.json();
-        Logger.error("Emoji Uploader", "Failed to fetch emojis: " + error.message, error);
-        return;
-      }
-  
-      const existingEmojisResponse1 = await response1.json();
-      const existingEmojis1 = existingEmojisResponse1.items || [];
+      headers: {
+        Authorization: `Bot ${process.env.BOT_TOKEN}`,
+      },
+    });
+
+    if (!response1.ok) {
+      const error = await response1.json();
+      Logger.error("Emoji Uploader", "Failed to fetch emojis: " + error.message, error);
+      return;
+    }
+
+    const existingEmojisResponse1 = await response1.json();
+    const existingEmojis1 = existingEmojisResponse1.items || [];
 
     client.emoji = existingEmojis1;
 

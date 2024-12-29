@@ -30,17 +30,17 @@ export const permissions = [
     PermissionFlagsBits.ReadMessageHistory,
     PermissionFlagsBits.SendMessages,
     PermissionFlagsBits.SendMessagesInThreads,
-    PermissionFlagsBits.SendPolls, 
+    PermissionFlagsBits.SendPolls,
     PermissionFlagsBits.Speak,
-    PermissionFlagsBits.UseEmbeddedActivities, 
+    PermissionFlagsBits.UseEmbeddedActivities,
     PermissionFlagsBits.UseExternalEmojis,
-    PermissionFlagsBits.UseExternalStickers, 
+    PermissionFlagsBits.UseExternalStickers,
     PermissionFlagsBits.ViewAuditLog,
     PermissionFlagsBits.ViewChannel,
 ];
 
 export const userFlagValues = [
-    "dev", 
+    "dev",
     "mod",
     "staff",
     "valued",

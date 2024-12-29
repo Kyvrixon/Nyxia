@@ -13,25 +13,25 @@ export default {
         .setName('confess')
         .setDescription('🤫 Have fun with confessions!')
 
-        .addSubcommand(x=>x
+        .addSubcommand(x => x
             .setName('send')
             .setDescription('🤫 Send a confession')
         )
-,
+    ,
     async init(client, interaction) {
         try {
             await handleCmd(client, interaction);
             return;
         } catch (e) {
-        try {
-            return interaction.editReply({
-                embeds: [errEmbed("Something went wrong while executing this command", e, interaction)]
-            })
-        } catch {
-            return interaction.channel.send({
-                embeds: [errEmbed("Something went wrong while executing this command", e, interaction)]
-            });
-        }
+            try {
+                return interaction.editReply({
+                    embeds: [errEmbed("Something went wrong while executing this command", e, interaction)]
+                })
+            } catch {
+                return interaction.channel.send({
+                    embeds: [errEmbed("Something went wrong while executing this command", e, interaction)]
+                });
+            }
         }
     }
 };

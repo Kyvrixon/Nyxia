@@ -11,7 +11,7 @@ const bannedFromSchema = new mongoose.Schema(
     { _id: false }
 );
 
-const flagsSchema = [ 
+const flagsSchema = [
     {
         type: String,
         enum: userFlagValues,
@@ -21,16 +21,16 @@ const flagsSchema = [
 ];
 
 const userSchema = new mongoose.Schema(
-    {   
+    {
         // Identifier
         user: { type: String, required: true, unique: true, index: true, trim: true },
-        
+
         // Flags
         flags: {
             isBannedFrom: {
                 type: [bannedFromSchema]
             },
-            common: { 
+            common: {
                 type: [flagsSchema]
             }
         },
@@ -56,7 +56,7 @@ const userSchema = new mongoose.Schema(
             }
         }
     },
-    { 
+    {
         timestamps: false,
     }
 );

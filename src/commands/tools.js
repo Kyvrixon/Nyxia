@@ -10,7 +10,7 @@ export default {
     data: new SlashCommandBuilder()
         .setName('tools')
         .setDescription('🧰 Use something in the toolbox')
-  
+
         .addSubcommand(x =>
             x
                 .setName('auth-check')
@@ -55,7 +55,7 @@ export default {
                 .setName('list-emojis')
                 .setDescription('🧰 List all the emojis I have!')
         )
-,
+    ,
     async init(client, interaction) {
         try {
             await handleCmd(client, interaction);

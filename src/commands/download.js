@@ -21,7 +21,7 @@ export default {
                 .setName('server')
                 .setDescription('📂 Download server data from the bot')
         )
-,
+    ,
     async init(client, interaction) {
         try {
             await handleCmd(client, interaction);
