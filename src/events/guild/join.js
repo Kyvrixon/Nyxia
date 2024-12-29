@@ -10,7 +10,10 @@ export default {
 
     async init(client, guild) {
         try {
-          await guildModel.create({ guild: guild.id });
+          const data = await guildModel.findOne({guild: guild.id});
+          if (!data) {
+            await guildModel.create({ guild: guild.id });
+          }
         } catch {};
 
         const data = await genModel.findOne({ "guildBans.ID": guild.id }).exec();
