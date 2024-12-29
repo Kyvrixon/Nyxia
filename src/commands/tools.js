@@ -49,6 +49,12 @@ export default {
                     .setDescription("(optional) The user you wish to clean messages from")
                 )
         )
+
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('list-emojis')
+                .setDescription('🧰 List all the emojis I have!')
+        )
 ,
     async init(client, interaction) {
         try {

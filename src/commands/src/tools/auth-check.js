@@ -59,7 +59,7 @@ export default async (client, interaction) => {
                     new EmbedBuilder()
                         .setFooter(footer())
                         .setTitle("Authority Check")
-                        .setColor("#89E894")
+                        .setColor("Orange")
                         .setDescription("> The user, <@" + target + ">, **does** have high authority of me!\n\n<@" + target + "> has authority to request stuff related to me such as investigating an error, report and more!")
                 ],
                 ephemeral: true,
