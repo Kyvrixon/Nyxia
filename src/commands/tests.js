@@ -4,6 +4,7 @@ import { handleCmd } from "../utils/functions.js";
 export default {
     dev: true,
     owner: false,
+    beta: true,
     desc: "Test commands for the bot",
     category: "Testing",
 

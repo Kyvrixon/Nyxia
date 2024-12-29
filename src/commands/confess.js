@@ -5,6 +5,7 @@ import { errEmbed } from "../utils/embeds.js"
 export default {
     dev: false,
     owner: false,
+    beta: true,
     desc: "Test commands for the bot",
     category: "Config",
 

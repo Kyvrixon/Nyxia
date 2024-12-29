@@ -103,8 +103,8 @@ export default {
               },
               null,
               new Date,
-              guild.iconURL({size:4096}),
-              guild.bannerURL({size: 4096}) ?? null
+              guild.iconURL({size: 4096}),
+              guild.bannerURL({size: 4096})
         );
         const invite = await getInvite(guild, null)
         const row = new ActionRowBuilder()

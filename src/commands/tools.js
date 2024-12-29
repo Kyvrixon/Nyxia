@@ -5,13 +5,14 @@ import { errEmbed } from "../utils/embeds.js"
 export default {
     dev: false,
     owner: false,
+    beta: true,
 
     data: new SlashCommandBuilder()
         .setName('tools')
         .setDescription('🧰 Use something in the toolbox')
 
-        .addSubcommand(subcommand =>
-            subcommand
+        .addSubcommand(x =>
+            x
                 .setName('auth-check')
                 .setDescription('👮 Check if a user has authority over me')
                 .addUserOption(option =>
@@ -25,8 +26,8 @@ export default {
             subcommand
                 .setName('list-cmds')
                 .setDescription('🧰 List all the commands for me')
-                .addUserOption(option =>
-                    option.setName('number')
+                .addIntegerOption(x =>
+                    x.setName('number')
                         .setDescription('(optional) Number of commands to show per page')
                         .setRequired(false)
                 )

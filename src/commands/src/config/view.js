@@ -1,25 +1,33 @@
 import { basicEmbed, errEmbed } from '../../../utils/embeds.js';
 import guildModel from '../../../models/guild.js';
-import { EmbedBuilder } from 'discord.js';
-import { createLeaderboard, getEmoji } from '../../../utils/functions.js';
+import { createLeaderboard, getEmoji, checkPermissions, delay } from '../../../utils/functions.js';
 
 export default async (client, interaction) => {
+    if (!await checkPermissions([], ["ManageGuild"], interaction, "user", "self")) {
+        return await interaction.reply({
+            embeds: [
+                errEmbed("You do not have permission to use this command! You must have **Manageguild** or higher.", null, interaction, "No permission")
+            ],
+            ephemeral: true
+        });
+    }
+
     await interaction.reply({
         embeds: [
             basicEmbed(
-                undefined,
+                null,
                 `${getEmoji("loading")} Loading data. This may take a while...`,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                false,
-                undefined,
-                undefined
+                null,
+                null,
+                null,
+                null,
+                new Date(),
+                null,
+                null
             )
         ]
     })
-
+    
     let config;
     const guildData = await guildModel.findOne({ guild: interaction.guild.id });
     if (!guildData) {
@@ -53,6 +61,8 @@ export default async (client, interaction) => {
         ;
 
         listArray.push(general, confessions);
+
+        await delay(Math.floor(Math.random() * 10) + 1);
 
     return await createLeaderboard("Current Configurations", listArray, interaction, 1);
 }

@@ -28,6 +28,22 @@ export default {
 				}
 			}
 
+			if (command.beta && interaction.guild.id !== "1125196330646638592") {
+				return interaction.reply(
+					{
+						embeds: [
+							errEmbed(
+								"You aren't authorised to use this command",
+								null,
+								interaction,
+								"Unauthorised"
+							)
+						],
+						ephemeral: true
+					}
+				)
+			}
+
 			return await command.init(client, interaction);
 		} catch (error) {
 			if (error.message === "Unknown Message") {};
