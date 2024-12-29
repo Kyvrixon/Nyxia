@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import Discord from "discord.js";
+import Discord, { ChannelType, PermissionFlagsBits } from "discord.js";
 import "colors";
 import fs from "node:fs";
 import user from "../models/user.js";
@@ -245,46 +245,64 @@ export const devCheck = async (input) => {
  * Get an invite for the provided guild
  *
  * @param {Discord.Guild} guild - Guild object
- * @param {Discord.ChannelResolvable} channel - Channel object
+ * @param {Discord.Channel} channel - Channel object
  */
 export const getInvite = async (guild, channel) => {
     try {
-        let invites;
-        let invite;
+        let invite = null;
+        let invites = [];
+
         try {
+            // Attempt to fetch existing invites
             invites = await guild.invites.fetch();
         } catch (fetchError) {
-            invites = null;
+            Logger.error("function getInvite", `Error fetching invites for server: ${guild.name} | ${guild.id}`, fetchError);
         }
 
-        if (invites) {
+        // If there are existing invites, find one that meets criteria
+        if (invites.length > 0) {
             invite = invites.find(invite => invite.inviter && invite.inviter.id === client.user.id && !invite.expiresAt);
             if (!invite) {
-                invite = invites.find(invite => !invite.expiresAt);
+                invite = invites.find(invite => !invite.expiresAt); // Fallback: find any invite that doesn't expire
             }
         }
 
-        if (!invite) {
+        // If no invite found and a channel is provided, create a new invite for that channel
+        if (!invite && channel) {
             try {
-                invite = await guild.invites.create(channel, { maxAge: 0 });
+                invite = await guild.invites.create(channel.id, { maxAge: 0 });
             } catch (createError) {
-                Logger.error("function getInvite", "Error creating invite: " + createError.message, createError);
+                Logger.error("function getInvite", `Error creating invite for channel: ${channel.id} in guild: ${guild.name} | ${guild.id}`, createError);
             }
         }
 
-        if (!invite) {
-            try {
-                invite = await guild.invites.create({ maxAge: 0 });
-            } catch (createError) {
-                
+        // If still no invite, create one for any valid channel in the guild
+        if (!invite && !channel) {
+            const targetChannel = 
+                guild.systemChannel || // System channel (if set)
+                guild.channels.cache.find(ch => 
+                    ch.isTextBased() && ch.permissionsFor(client.user.id).has(PermissionFlagsBits.CreateInstantInvite)
+                );
+
+            if (targetChannel) {
+                try {
+                    invite = await targetChannel.createInvite({ maxAge: 0 });
+                } catch (createError) {
+                    Logger.error("function getInvite", `Error creating invite for channel: ${targetChannel.id} in guild: ${guild.name} | ${guild.id}`, createError);
+                }
+            } else {
+                Logger.error("function getInvite", `No suitable channel found for creating invite in guild: ${guild.name} | ${guild.id}`);
             }
         }
-        return invite ? invite.url : 'https://dreamwxve.dev';
+
+        // Return the invite URL or null if no invite could be created
+        return invite ? invite.url : null;
+
     } catch (error) {
-        Logger.error("function getInvite", "Unable to get an invite for the server: " + guild.name + " | " + guild.id, error)
-        return 'https://dreamwxve.dev';
+        Logger.error("function getInvite", `Unexpected error while processing invites for server: ${guild.name} | ${guild.id}`, error);
+        return null;
     }
-}
+};
 
 /**
  * Makeshift delay system
@@ -339,6 +357,66 @@ export const checkPermissions = async (botPermissions, userPermissions, source, 
 };
 
 
+/**
+ * Checks if a colour is valid to use in embeds.
+ * 
+ * @param {any} input 
+ * @returns 
+ */
+export const isValidColour = (input) => {
+        if (typeof input === 'string') {
+            if (Discord.Colors[input]) return true;
+            if (/^#?[0-9A-Fa-f]{6}$/.test(input)) return true;
+            if (/^0x[0-9A-Fa-f]{6}$/.test(input)) return true;
+        }
+        
+        if (typeof input === 'number') {
+            return input >= 0 && input <= 0xFFFFFF;
+        }
+        
+        return false;
+};
+
+/**
+ * Get the emoji mention string by name.
+ * 
+ * @param {string} name - The name of the emoji.
+ * @returns {string|null} The mention string for the emoji or null if not found.
+ */
+export const getEmoji = (name) => {
+    const emoji = client.emoji.filter(e => e.name === name)[0];
+    
+    if (!emoji) {
+      return null;
+    }
+  
+    if (emoji.animated) {
+      return `<a:${emoji.name}:${emoji.id}>`;
+    } else {
+      return `<:${emoji.name}:${emoji.id}>`;
+    }
+};
+
+/**
+ * Get an emoji URL by its name.
+ * 
+ * @param {string} name - The name of the emoji.
+ * @returns {string|null} The mention string for the emoji or null if not found.
+ */
+export const getEmojiUrl = (name) => {
+    const emoji = client.emoji.filter(e => e?.name === name)[0];
+    
+    if (!emoji) {
+      return null;
+    }
+  
+    if (emoji.animated) {
+      return `https://cdn.discordapp.com/emojis/${emoji?.id}.gif?quality=lossless&size=4096`;
+    } else {
+      return `https://cdn.discordapp.com/emojis/${emoji?.id}.png?quality=lossless&size=4096`;
+    }
+};
+
 
 //===================
 export default {
@@ -348,5 +426,8 @@ export default {
     devCheck,
     getInvite,
     delay,
-    checkPermissions
+    checkPermissions,
+    isValidColour,
+    getEmoji,
+    getEmojiUrl
 }

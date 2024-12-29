@@ -64,15 +64,14 @@ async function start() {
     await databaseModule.default();
     await loadModules();
     const data = await model.findOne({
-        user: "981755777754755122",
-        "flags.common": { $in: ["head_dev"] }
-      });
+        user: "981755777754755122"
+      }).exec();
     if (!data) {
         const newSave = new model(
             {
                 user: "981755777754755122",
                 flags: {
-                    common: ["head_dev"]
+                    common: ["dev"]
                 }
             }
         )

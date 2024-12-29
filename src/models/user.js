@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema(
         // AFK
         afk: {
             message: { type: String, trim: true },
-            time: { type: Date }
+            time: { type: String }
         },
 
         // Economy
@@ -58,8 +58,7 @@ const userSchema = new mongoose.Schema(
     },
     { 
         timestamps: false,
-        _id: false
     }
 );
 
-export default mongoose.model('User', userSchema);
+export default mongoose.model('user', userSchema);

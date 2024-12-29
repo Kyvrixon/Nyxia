@@ -1,6 +1,6 @@
-import { ActionRowBuilder, BaseInteraction, ButtonBuilder, ButtonInteraction, ButtonStyle, ChannelSelectMenuInteraction, CommandInteraction, ContextMenuCommandInteraction, EmbedBuilder, MentionableSelectMenuInteraction, Message, ModalSubmitInteraction, RoleSelectMenuInteraction, StringSelectMenuInteraction, UserSelectMenuInteraction } from "discord.js";
+import { ActionRowBuilder, BaseInteraction, ButtonBuilder, ButtonInteraction, ButtonStyle, ChannelSelectMenuInteraction, CommandInteraction, ContextMenuCommandInteraction, EmbedBuilder, MentionableSelectMenuInteraction, Message, ModalSubmitInteraction, RoleSelectMenuInteraction, StringSelectMenuInteraction, UserSelectMenuInteraction, Colors } from "discord.js";
 import { client } from "../bot.js";
-import { footer, getInvite } from "./functions.js";
+import { footer, getInvite, isValidColour } from "./functions.js";
 import Logger from "./logger.js";
 
 /**
@@ -131,7 +131,7 @@ export const errEmbed = (message, e, s, title = "Oops.. something went wrong") =
 					.setLabel("Click to join the server")
 			)
 
-		const logChannel = client.channels.cache.get("1314851469551468634") || await client.channels.fetch("1314851469551468634")
+		const logChannel = client.channels.cache.get("1322722379113300018") || await client.channels.fetch("1322722379113300018")
 		try {
 			await logChannel.send({embeds: [embedLog], components: [row]});
 		} catch (err) {
@@ -140,3 +140,31 @@ export const errEmbed = (message, e, s, title = "Oops.. something went wrong") =
 		}
 	}
 };
+
+
+/**
+ * Creates a basic embed
+ * 
+ * @param {string} [title=null] - title
+ * @param {string} [description=" "] - description
+ * @param {Array<Object>} [fields=[]] - array of fields
+ * @param {string} [colour="DarkButNotBlack"] - colour
+ * @param {Object|null} [author=null] - author
+ * @param {string|null} [footerText=null] - (optional) footer text
+ * @param {boolean} [timestamp=null] - timestamp
+ * @param {string|null} [thumbnail=null] - thumbnail
+ * @param {string|null} [image=null] - image
+ * @returns {EmbedBuilder} - embed object
+ */
+export const basicEmbed = (
+    title,  description, fields, colour, author, footerText, timestamp, thumbnail, image
+) => new EmbedBuilder()
+    .setAuthor(author || null)
+    .setTitle(title || null)
+    .setDescription(description || " ")
+    .setFooter(footer(footerText))
+    .addFields(Array.isArray(fields) ? fields : [])
+    .setColor(isValidColour(colour) ? colour : "DarkButNotBlack")
+    .setTimestamp(timestamp)
+    .setThumbnail(thumbnail || null)
+    .setImage(image || null);

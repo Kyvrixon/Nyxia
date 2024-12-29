@@ -27,28 +27,16 @@ export const permissions = [
     PermissionFlagsBits.ModerateMembers,
     PermissionFlagsBits.MoveMembers,
     PermissionFlagsBits.MuteMembers,
-    //PermissionFlagsBits.PrioritySpeaker, 
     PermissionFlagsBits.ReadMessageHistory,
-    //PermissionFlagsBits.RequestToSpeak,
     PermissionFlagsBits.SendMessages,
     PermissionFlagsBits.SendMessagesInThreads,
     PermissionFlagsBits.SendPolls, 
-    //PermissionFlagsBits.SendTTSMessages,
-    //PermissionFlagsBits.SendVoiceMessages, 
     PermissionFlagsBits.Speak,
-    //PermissionFlagsBits.Stream,
-    //PermissionFlagsBits.UseApplicationCommands,
     PermissionFlagsBits.UseEmbeddedActivities, 
-    //PermissionFlagsBits.UseExternalApps,
     PermissionFlagsBits.UseExternalEmojis,
-    //PermissionFlagsBits.UseExternalSounds,
     PermissionFlagsBits.UseExternalStickers, 
-    //PermissionFlagsBits.UseSoundboard, 
-    //PermissionFlagsBits.UseVAD,
     PermissionFlagsBits.ViewAuditLog,
     PermissionFlagsBits.ViewChannel,
-    //PermissionFlagsBits.ViewCreatorMonetizationAnalytics,
-    //PermissionFlagsBits.ViewGuildInsights
 ];
 
 export const userFlagValues = [
@@ -57,9 +45,17 @@ export const userFlagValues = [
     "staff",
     "valued",
     "premium"
-]
+];
+
+// These get uploaded. Use client.emoji[name] to reference
+export const emojisList = {
+    cleaning: "https://cdn3.emoji.gg/emojis/8223-cleaningthatcringe.gif",
+    bored: "https://cdn3.emoji.gg/emojis/7899-blob-bored.gif",
+    loading: "https://cdn3.emoji.gg/emojis/78444-pinkcherryblossom.gif"
+}
 
 export default {
     permissions,
-    userFlagValues
+    userFlagValues,
+    emojisList
 }

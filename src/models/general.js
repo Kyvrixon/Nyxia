@@ -23,25 +23,27 @@ const affiliates = new mongoose.Schema(
             type: [String]
         }
     }
+);
+
+const banSchema = new mongoose.Schema(
+    {
+        ID: { type: String, required: true, index: true },
+        reason: { type: String, required: true },
+        appealable: { type: Boolean, required: true }
+    }
 )
 
-const guildSchema = new mongoose.Schema(
+const Schema = new mongoose.Schema(
     {
         ads: {
             affiliates: [affiliates]
         },
 
-        counts: {
-            guilds: {
-                type: Number, 
-                default: 0
-            },
-            users: {
-                type: Number, 
-                default: 0
-            }
+        guildBans: {
+            type: [banSchema],
+            default: []
         }
     }
 );
 
-export default mongoose.model('Guild', guildSchema);
+export default mongoose.model('general', Schema);

@@ -13,7 +13,7 @@ export default {
         .addSubcommand(subcommand =>
             subcommand
                 .setName('auth-check')
-                .setDescription('👮 Check if a user has authority over the bot')
+                .setDescription('👮 Check if a user has authority over me')
                 .addUserOption(option =>
                     option.setName('user')
                         .setDescription('The user to check')
@@ -36,13 +36,16 @@ export default {
             subcommand
                 .setName('cleanup')
                 .setDescription('🧹 Cleanup messages in the channel')
-                .addUserOption(x => x
-                    .setName("target")
-                    .setDescription("(optional) The user you wish to clean")
-                )
+
                 .addStringOption(x => x
                     .setName("amount")
-                    .setDescription("(optional) Amount to delete. Max of 100")
+                    .setDescription("Amount to delete. Max of 100")
+                    .setRequired(true)
+                )
+
+                .addUserOption(x => x
+                    .setName("target")
+                    .setDescription("(optional) The user you wish to clean messages from")
                 )
         )
 ,

@@ -1,5 +1,5 @@
 import { EmbedBuilder, PermissionFlagsBits } from "discord.js";
-import { errEmbed } from "../../../utils/embeds.js";
+import { basicEmbed, errEmbed } from "../../../utils/embeds.js";
 import { checkPermissions } from "../../../utils/functions.js";
 
 export default async (client, interaction) => {
@@ -52,9 +52,17 @@ export default async (client, interaction) => {
 
     await interaction.reply({
         embeds: [
-            new EmbedBuilder()
-                .setColor("DarkButNotBlack")
-                .setDescription("Clearing messages...")
+            basicEmbed(
+                undefined,
+                "> Cleaning messages...",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            )
         ]
     });
 
@@ -83,12 +91,17 @@ export default async (client, interaction) => {
 
         const confirmationMsg = await interaction.channel.send({
             embeds: [
-                new EmbedBuilder()
-                    .setColor("Green")
-                    .setDescription(`${totalMsgs ? `Done! I have cleared \`${msgCount}/${totalMsgs}\` messages!` : "Hm, no messages for me to clear here!"}`)
-                    .setFooter({
-                        text: "I will auto delete in 5 seconds"
-                    })
+                basicEmbed(
+                    "Cleanup Completed!",
+                    `${totalMsgs ? `Done! I have cleared \`${msgCount}/${totalMsgs}\` messages!` : "Hm, no messages for me to clear here!"}`,
+                    null,
+                    "Green",
+                    null,
+                    "I will auto delete in 5 seconds",
+                    null,
+                    null,
+                    null
+                )
             ]
         });
 

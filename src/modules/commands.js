@@ -59,14 +59,14 @@ export default async (client) => {
 
         try {
             //const emptyArray = [];
-            if (process.env.production) {
+            if (!process.env.dev) {
                 await rest.put(
-                    Routes.applicationCommands("1309736362454421505"),
+                    Routes.applicationCommands(process.env.BOT_ID),
                     { body: commands }
                 );
-            } else if (!process.env.production) {
+            } else if (process.env.dev) {
                 await rest.put(
-                    Routes.applicationGuildCommands("1309736362454421505", "1125196330646638592"),
+                    Routes.applicationGuildCommands(process.env.BOT_ID, "1322721777536733204"),
                     { body: commands }
                 );
             }
