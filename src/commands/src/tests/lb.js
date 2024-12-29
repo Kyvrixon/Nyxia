@@ -2,7 +2,7 @@ import { createLeaderboard } from '../../../utils/functions.js';
 
 export default async (client, interaction) => {
     try {
-        const b = [1,2,3];
+        const b = [1, 2, 3];
         await createLeaderboard("Emoji list", b, interaction, 5, null);
     } catch (e) {
         console.log(e);

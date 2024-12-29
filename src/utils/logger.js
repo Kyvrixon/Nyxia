@@ -1,7 +1,7 @@
 import 'colors';
 
 export default class Logger {
-    
+
     static async success(title, message) {
         console.log(`[${title}]`.bold.cyan + " -> ".grey + `${message}`.bold.green);
         return Promise.resolve();

@@ -31,7 +31,7 @@ export default async (client, interaction) => {
         });
     }
 
-    await interaction.deferReply({fetchReply: true});
+    await interaction.deferReply({ fetchReply: true });
     await interaction.editReply("Fetching data please wait...\n-# Please keep an eye on this message!");
 
     const data = await downloadData(model, value);
@@ -41,15 +41,15 @@ export default async (client, interaction) => {
         .setDescription("> Here is all of your server data that has been collected by the bot. This is confusing to read but this is all the data we have on you. If you would like to partially or completely delete this data, please contact us.")
         .setFooter(footer())
         .setColor("DarkButNotBlack");
-        try {
-            await interaction.user.send({
-                content: null,
-                embeds: [embed],
-                files: [attachment]
-            });
-        } catch (error) {
-            await interaction.editReply("I couldn't send you a DM, please make sure your DMs are open.");
-            return;
-        }
-        await interaction.editReply("I have sent you a DM with the data.");
+    try {
+        await interaction.user.send({
+            content: null,
+            embeds: [embed],
+            files: [attachment]
+        });
+    } catch (error) {
+        await interaction.editReply("I couldn't send you a DM, please make sure your DMs are open.");
+        return;
+    }
+    await interaction.editReply("I have sent you a DM with the data.");
 }

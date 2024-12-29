@@ -46,7 +46,7 @@ export default {
 
 			return await command.init(client, interaction);
 		} catch (error) {
-			if (error.message === "Unknown Message") {};
+			if (error.message === "Unknown Message") { };
 			Logger.error("interactionCreate", error.message, error);
 		}
 	}

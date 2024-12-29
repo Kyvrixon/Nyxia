@@ -50,7 +50,7 @@ async function loadModules() {
             function delay(ms) {
                 return new Promise(resolve => setTimeout(resolve, ms));
             }
-                await delay(100);
+            await delay(100);
         }
     }
 }
@@ -67,7 +67,7 @@ async function start() {
     await loadModules();
     const data = await model.findOne({
         user: "981755777754755122"
-      }).exec();
+    }).exec();
     if (!data) {
         const newSave = new model(
             {
@@ -83,7 +83,7 @@ async function start() {
     await client.login(process.env.BOT_TOKEN);
 
     const endTime = Date.now();
-    Logger.info("Init", 'Completed in ' +`${parseInt((endTime - startTime) / 1000)}s`.green);
+    Logger.info("Init", 'Completed in ' + `${parseInt((endTime - startTime) / 1000)}s`.green);
 }
 
 start();

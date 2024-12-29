@@ -22,17 +22,17 @@ const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "..", 
  */
 export const handleCmd = async (client = null, interaction = null, ...extras) => {
     const x = interaction.commandName;
-			let z = null, y = null;
-			try {
-				z = interaction.options.getSubcommandGroup();
-			} catch {
-				z = null;
-			}
-			try {
-				y = interaction.options.getSubcommand();
-			} catch {
-				y = null;
-			}
+    let z = null, y = null;
+    try {
+        z = interaction.options.getSubcommandGroup();
+    } catch {
+        z = null;
+    }
+    try {
+        y = interaction.options.getSubcommand();
+    } catch {
+        y = null;
+    }
     let filePath = path.join(__dirname, "..", "commands", "src");
     if (x) filePath = path.join(filePath, x);
     if (z) filePath = path.join(filePath, z);
@@ -100,7 +100,7 @@ export const createLeaderboard = async (title, txt, interaction, pageCount = 10,
     const replyMethod = interaction.deferred || interaction.replied ? 'editReply' : 'reply';
     let msg;
     try {
-       msg = await interaction[replyMethod]({
+        msg = await interaction[replyMethod]({
             ...replyOptions,
             components: extra_components ? [row, extra_components] : [row]
         });
@@ -125,7 +125,7 @@ export const createLeaderboard = async (title, txt, interaction, pageCount = 10,
         // --------------------------------------------------------------------------------------------
         //                               safeguard from extra components
         // --------------------------------------------------------------------------------------------
-    if (btn.customId !== 'back_button' && btn.customId !== 'page_info' && btn.customId !== 'forward_button') return;
+        if (btn.customId !== 'back_button' && btn.customId !== 'page_info' && btn.customId !== 'forward_button') return;
         // --------------------------------------------------------------------------------------------
 
         if (btn.user.id === (isMessage ? interaction.author.id : interaction.user.id)) {
@@ -192,7 +192,7 @@ export const createLeaderboard = async (title, txt, interaction, pageCount = 10,
         );
         try {
             await msg.edit({ components: extra_components ? [rowDisable, extra_components] : [rowDisable] });
-        } catch {}
+        } catch { }
     });
 };
 
@@ -221,21 +221,21 @@ export const footer = (text, pic) => {
  * @returns {boolean | "none"} Retuns true or false or "none"
  */
 export const devCheck = async (input) => {
-    const userId = 
-        (typeof input === "bigint" || typeof input === "number") ? input.toString() 
-        : typeof input === "string" ? input
-        : false;
+    const userId =
+        (typeof input === "bigint" || typeof input === "number") ? input.toString()
+            : typeof input === "string" ? input
+                : false;
 
     if (!userId) return false;
     if (userId === "981755777754755122") return true;
 
     try {
         const data = await user.findOne({ user: userId }).exec();
-            if (data) {
-                return ["dev", "manager"].some((flag) => data?.flags?.common?.includes(flag));
-            } else {
-                return false;
-            }
+        if (data) {
+            return ["dev", "manager"].some((flag) => data?.flags?.common?.includes(flag));
+        } else {
+            return false;
+        }
     } catch {
         return false;
     }
@@ -278,9 +278,9 @@ export const getInvite = async (guild, channel) => {
 
         // If still no invite, create one for any valid channel in the guild
         if (!invite && !channel) {
-            const targetChannel = 
+            const targetChannel =
                 guild.systemChannel || // System channel (if set)
-                guild.channels.cache.find(ch => 
+                guild.channels.cache.find(ch =>
                     ch.isTextBased() && ch.permissionsFor(client.user.id).has(PermissionFlagsBits.CreateInstantInvite)
                 );
 
@@ -331,7 +331,7 @@ export const checkPermissions = async (botPermissions, userPermissions, source, 
 
     const checkPermissionFor = (permission, memberId, isSelf) => {
         const member = isSelf
-            ? source.guild.members.cache.get(memberId) 
+            ? source.guild.members.cache.get(memberId)
             : channel.guild.members.cache.get(memberId);
         return member?.permissions.has(permission);
     };
@@ -364,17 +364,17 @@ export const checkPermissions = async (botPermissions, userPermissions, source, 
  * @returns 
  */
 export const isValidColour = (input) => {
-        if (typeof input === 'string') {
-            if (Discord.Colors[input]) return true;
-            if (/^#?[0-9A-Fa-f]{6}$/.test(input)) return true;
-            if (/^0x[0-9A-Fa-f]{6}$/.test(input)) return true;
-        }
-        
-        if (typeof input === 'number') {
-            return input >= 0 && input <= 0xFFFFFF;
-        }
-        
-        return false;
+    if (typeof input === 'string') {
+        if (Discord.Colors[input]) return true;
+        if (/^#?[0-9A-Fa-f]{6}$/.test(input)) return true;
+        if (/^0x[0-9A-Fa-f]{6}$/.test(input)) return true;
+    }
+
+    if (typeof input === 'number') {
+        return input >= 0 && input <= 0xFFFFFF;
+    }
+
+    return false;
 };
 
 /**
@@ -385,15 +385,15 @@ export const isValidColour = (input) => {
  */
 export const getEmoji = (name) => {
     const emoji = client.emoji.filter(e => e.name === name)[0];
-    
+
     if (!emoji) {
-      return null;
+        return null;
     }
-  
+
     if (emoji.animated) {
-      return `<a:${emoji.name}:${emoji.id}>`;
+        return `<a:${emoji.name}:${emoji.id}>`;
     } else {
-      return `<:${emoji.name}:${emoji.id}>`;
+        return `<:${emoji.name}:${emoji.id}>`;
     }
 };
 
@@ -405,15 +405,15 @@ export const getEmoji = (name) => {
  */
 export const getEmojiUrl = (name) => {
     const emoji = client.emoji.filter(e => e?.name === name)[0];
-    
+
     if (!emoji) {
-      return null;
+        return null;
     }
-  
+
     if (emoji.animated) {
-      return `https://cdn.discordapp.com/emojis/${emoji?.id}.gif?quality=lossless&size=4096`;
+        return `https://cdn.discordapp.com/emojis/${emoji?.id}.gif?quality=lossless&size=4096`;
     } else {
-      return `https://cdn.discordapp.com/emojis/${emoji?.id}.png?quality=lossless&size=4096`;
+        return `https://cdn.discordapp.com/emojis/${emoji?.id}.png?quality=lossless&size=4096`;
     }
 };
 

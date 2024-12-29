@@ -29,9 +29,9 @@ export default async (client, interaction) => {
             ephemeral: true
         });
     }
-       
+
     amount = parseInt(amountStr, 10);
-    
+
     if (amount > 100 || amount < 1) {
         return interaction.reply({
             embeds: [
@@ -45,9 +45,9 @@ export default async (client, interaction) => {
             ephemeral: true
         });
     }
-    
+
     if (amount !== 0) {
-        amount = 100; 
+        amount = 100;
     }
 
     await interaction.reply({
@@ -74,8 +74,8 @@ export default async (client, interaction) => {
             totalMsgs = botMessages.size;
 
             if (botMessages.size > 0) {
-               const done = await interaction.channel.bulkDelete(botMessages, true);
-               msgCount = msgCount + done.size;
+                const done = await interaction.channel.bulkDelete(botMessages, true);
+                msgCount = msgCount + done.size;
             }
         } else {
             const user = await client.users.fetch(target);
@@ -84,7 +84,7 @@ export default async (client, interaction) => {
             totalMsgs = targetMessages.size;
 
             if (targetMessages.size > 0) {
-               const done = await interaction.channel.bulkDelete(targetMessages, true);
+                const done = await interaction.channel.bulkDelete(targetMessages, true);
                 msgCount = msgCount + done.size;
             }
         }

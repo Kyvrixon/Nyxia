@@ -7,7 +7,7 @@ import Logger from '../../../utils/logger.js';
 export default async (client, interaction) => {
     const target = interaction.options.getUser('user');
     const member = interaction.guild.members.cache.get(target) || client.users.cache.get(target) || await client.users.fetch(target).catch(() => null);
-    
+
     if (member.id === "1309736362454421505") {
         return interaction.reply({
             embeds: [

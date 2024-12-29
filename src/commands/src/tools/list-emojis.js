@@ -4,22 +4,22 @@ export default async (client, interaction) => {
 
     const emojiArray = [];
     let currentString = "";
-    
-    for (const e of client.emoji) { 
+
+    for (const e of client.emoji) {
         const emoji = getEmoji(e.name);
-    
+
         if (currentString) {
-            currentString += ` ${emoji}`; 
+            currentString += ` ${emoji}`;
         } else {
             currentString = `${emoji}`;
         }
-    
+
         if (currentString.split(" ").length === 5) {
             emojiArray.push(currentString);
-            currentString = ""; 
+            currentString = "";
         }
     }
-    
+
     if (currentString) {
         emojiArray.push(currentString);
     }

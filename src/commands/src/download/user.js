@@ -26,7 +26,7 @@ export default async (client, interaction,) => {
         return new AttachmentBuilder(buffer, { name: name + '.json' });
     }
 
-    await interaction.deferReply({fetchReply: true});
+    await interaction.deferReply({ fetchReply: true });
     await interaction.editReply("Fetching data please wait...\n-# Please keep an eye on this message!");
 
     const data = await downloadData(models, value);
