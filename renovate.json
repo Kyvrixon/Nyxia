@@ -5,7 +5,9 @@
   ],
   "packageRules": [
     {
-      "matchPackagePatterns": ["*"],
+      "matchPackagePatterns": [
+        "*"
+      ],
       "enabled": true
     }
   ]

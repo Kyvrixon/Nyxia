@@ -8,7 +8,7 @@ const AFK = {
      */
     check: async (user) => {
         const data = await userModel.findOne({ user: user.id });
-        
+
         if (!data || !data.afk) {
             return false;
         } else

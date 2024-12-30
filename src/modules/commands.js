@@ -34,13 +34,6 @@ export default async (client) => {
                 const command = commandModule.default;
                 if (command.data && command.init) {
 
-                    if (command.beta === true) {
-                        betaCommands.push(command.data.toJSON());
-                        client.commands.set(command.data.name, command);
-                        count++;
-                        continue;
-                    };
-
                     client.commands.set(command.data.name, command);
                     commands.push(command.data.toJSON());
                     count++;
@@ -59,18 +52,16 @@ export default async (client) => {
         Logger.info('Cmd Loader', `Loaded ${count.toString().green} of ${commandFiles.length.toString().green} (${errored.toString().red} errored)`);
 
         const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
-
         try {
-            //const emptyArray = [];
             if (!process.env.dev) {
                 await rest.put(
-                    Routes.applicationCommands("1309736362454421505"),
+                    Routes.applicationCommands(process.env.BOT_ID),
                     { body: commands }
                 );
             } else if (process.env.dev) {
                 await rest.put(
                     Routes.applicationGuildCommands(process.env.BOT_ID, "1125196330646638592"),
-                    { body: betaCommands }
+                    { body: commands }
                 );
             }
             return;
