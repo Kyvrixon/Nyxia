@@ -12,49 +12,55 @@ export default async (client, interaction) => {
             embeds: [
                 errEmbed("You can only have max of 10 per page and minimum of 1!", null, interaction, "oopsie...")
             ]
-        })
+        });
     }
     if (resultsPerPage < 1) {
         return interaction.reply({
             embeds: [
                 errEmbed("You can only have max of 10 per page and minimum of 1!", null, interaction, "oopsie...")
             ]
-        })
+        });
     }
 
-    const processOptions = (command, parentName, options, baseId, groupName = '') => {
-        for (const option of options) {
-            if (option.type === 1) {
-                const fullName = groupName ? `${parentName} ${groupName} ${option.name}` : `${parentName} ${option.name}`;
-                const commandObject = {
-                    title: fullName,
-                    desc: option.description || "No description available",
-                    id: baseId
-                };
-                cmdListArray.push(commandObject);
+    const processSubcommands = (parentName, subcommands, baseId) => {
+        for (const subcommand of subcommands) {
+            // Construct full command name with subcommands/subcommand groups
+            const fullName = `${parentName} ${subcommand.name}`;
+            const commandObject = {
+                title: fullName,
+                desc: subcommand.description || "No description available",
+                id: baseId
+            };
+            cmdListArray.push(commandObject);
 
-                const commandMention = `</${commandObject.title}:${commandObject.id}>`;
-                const entry =
-                    `- ${commandMention}\n` +
-                    `> \`${commandObject.desc}\`\n`;
+            const commandMention = `</${commandObject.title}:${commandObject.id}>`;
+            const entry =
+                `- ${commandMention}\n` +
+                `> \`${commandObject.desc}\`\n`;
 
-                completeArray.push(entry);
-
-            } else if (option.type === 2) {
-                processOptions(command, parentName, option.options || [], baseId, option.name);
-
-            }
+            completeArray.push(entry);
         }
     };
 
     for (const command of rawCmds.values()) {
-        if (command.options && command.options.length > 0) {
-            processOptions(command, command.name, command.options, command.id, '');
+        // Check if the command has subcommands or subcommand groups
+        if (command.options && command.options.some(option => option.type === 1 || option.type === 2)) {
+            const subcommands = command.options.filter(option => option.type === 1);
+            const subcommandGroups = command.options.filter(option => option.type === 2);
+
+            // Process subcommands
+            processSubcommands(command.name, subcommands, command.id);
+
+            // Process subcommand groups and their subcommands
+            for (const group of subcommandGroups) {
+                processSubcommands(`${command.name} ${group.name}`, group.options || [], command.id);
+            }
 
         } else {
+            // Process commands without subcommands or subcommand groups
             const commandObject = {
                 title: command.name,
-                desc: command.description,
+                desc: command.description || "No description available",
                 id: command.id
             };
             cmdListArray.push(commandObject);

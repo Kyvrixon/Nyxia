@@ -51,7 +51,7 @@ export const afkHandler = async (client, message) => {
         for (const u of message.mentions.users.values()) {
 
             // prevent self pinging
-            if (u === message.author.id) continue; 
+            if (u.id === message.author.id) continue; 
 
             if (!message.content.includes("@here") && !message.content.includes("@everyone")) {
                 const isAFK = await AFK.check(u);

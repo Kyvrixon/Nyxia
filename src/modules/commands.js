@@ -16,7 +16,6 @@ export default async (client) => {
         let count = 0;
         let errored = 0;
         const commands = [];
-        const betaCommands = [];
         const commandsPath = path.join(__dirname, "..", "commands");
         const readCommandFiles = (dirPath) => {
             return fs.readdirSync(dirPath).filter(file => {
@@ -34,7 +33,7 @@ export default async (client) => {
                 const command = commandModule.default;
                 if (command.data && command.init) {
 
-                    client.commands.set(command.data.name, command);
+                    await client.commands.set(command.data.name, command);
                     commands.push(command.data.toJSON());
                     count++;
 
