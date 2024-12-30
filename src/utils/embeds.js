@@ -1,4 +1,4 @@
-import { ActionRowBuilder, BaseInteraction, ButtonBuilder, ButtonInteraction, ButtonStyle, ChannelSelectMenuInteraction, CommandInteraction, ContextMenuCommandInteraction, EmbedBuilder, MentionableSelectMenuInteraction, Message, ModalSubmitInteraction, RoleSelectMenuInteraction, StringSelectMenuInteraction, UserSelectMenuInteraction, Colors } from "discord.js";
+import { ActionRowBuilder, BaseInteraction, ButtonBuilder, ButtonInteraction, ButtonStyle, ChannelSelectMenuInteraction, CommandInteraction, ContextMenuCommandInteraction, EmbedBuilder, MentionableSelectMenuInteraction, Message, ModalSubmitInteraction, RoleSelectMenuInteraction, StringSelectMenuInteraction, UserSelectMenuInteraction } from "discord.js";
 import { client } from "../bot.js";
 import { footer, getInvite, isValidColour } from "./functions.js";
 import Logger from "./logger.js";
@@ -12,8 +12,8 @@ import Logger from "./logger.js";
  * @returns {import('discord.js').EmbedBuilder} EmbedBuiler instance.
  */
 export const errEmbed = (message, e, s, title = "Oops.. something went wrong") => {
-	const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	let code = '';
+	const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	let code = "";
 	for (let i = 0; i < 10; i++) {
 		code += characters.charAt(Math.floor(Math.random() * characters.length));
 	}
@@ -39,13 +39,13 @@ export const errEmbed = (message, e, s, title = "Oops.. something went wrong") =
 	return embedReply;
 
 	async function sendLog(error, source) {
-		if (!error || !source) return;
+		if (!error || !source) {return;}
 
 		if (!source instanceof Message || !source instanceof BaseInteraction) {
-			return Logger.error("function errEmbed", "Source object isnt of BaseInteraction or Message", error)
+			return Logger.error("function errEmbed", "Source object isnt of BaseInteraction or Message", error);
 		}
 
-		let cmdValueString = '';
+		let cmdValueString = "";
 		if (source instanceof CommandInteraction) {
 			let group = null, sub = null;
 			try {
@@ -63,7 +63,7 @@ export const errEmbed = (message, e, s, title = "Oops.. something went wrong") =
 				subcommandGroup: group,
 				subcommand: sub
 			};
-			cmdValueString = `> \`/${source.commandName} ${commandInfo.subcommandGroup ? `${commandInfo.subcommandGroup} ` : ''}${commandInfo.subcommand || ''}\``;
+			cmdValueString = `> \`/${source.commandName} ${commandInfo.subcommandGroup ? `${commandInfo.subcommandGroup} ` : ""}${commandInfo.subcommand || ""}\``;
 
 		} else if (source instanceof ContextMenuCommandInteraction) {
 			cmdValueString = `> \`/${source.commandName}\``;
@@ -84,7 +84,7 @@ export const errEmbed = (message, e, s, title = "Oops.. something went wrong") =
 			cmdValueString = `> \`Button: ${source.customId}\``;
 
 		} else {
-			cmdValueString = `> \`Unknown Interaction Type\``;
+			cmdValueString = "> `Unknown Interaction Type`";
 		}
 
 		const embedLog = new EmbedBuilder()
@@ -92,36 +92,36 @@ export const errEmbed = (message, e, s, title = "Oops.. something went wrong") =
 			.setDescription(`__**Error Message:**__ \`\`\`\n${error?.message}\`\`\`\n__**Stack Trace:**__ \`\`\`\n${error?.stack}\`\`\``)
 			.addFields(
 				{
-					name: `__Error Code__`,
+					name: "__Error Code__",
 					value: `> \`${code}\``,
 					inline: true
 				},
 				{
-					name: `__Server__`,
+					name: "__Server__",
 					value: `> \`${source?.guild?.name}\``,
 					inline: true
 				},
 				{
-					name: `__User__`,
+					name: "__User__",
 					value: `> \`${(source instanceof Message ? source?.author?.username : source?.user?.username)}\``,
 					inline: true
 				},
 				{
-					name: `__Channel__`,
+					name: "__Channel__",
 					value: `> \`${(source?.channel?.name || "Cannot find channel")}\`\n> <#${source?.channel?.id}>`,
 					inline: true
 				},
 				{
-					name: `__Timestamp__`,
+					name: "__Timestamp__",
 					value: `> <t:${Math.floor(new Date().getTime() / 1000)}:f>`,
 					inline: true
 				},
 				{
-					name: `__Command/Interaction__`,
+					name: "__Command/Interaction__",
 					value: cmdValueString,
 					inline: true
 				}
-			)
+			);
 
 		const row = new ActionRowBuilder()
 			.addComponents(
@@ -129,9 +129,9 @@ export const errEmbed = (message, e, s, title = "Oops.. something went wrong") =
 					.setStyle(ButtonStyle.Link)
 					.setURL(await getInvite(source.guild, source.channel))
 					.setLabel("Click to join the server")
-			)
+			);
 
-		const logChannel = client.channels.cache.get("1322722379113300018") || await client.channels.fetch("1322722379113300018")
+		const logChannel = client.channels.cache.get("1322722379113300018") || await client.channels.fetch("1322722379113300018");
 		try {
 			await logChannel.send({ embeds: [embedLog], components: [row] });
 		} catch (err) {

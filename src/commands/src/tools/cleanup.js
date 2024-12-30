@@ -1,4 +1,3 @@
-import { EmbedBuilder, PermissionFlagsBits } from "discord.js";
 import { basicEmbed, errEmbed } from "../../../utils/embeds.js";
 import { checkPermissions } from "../../../utils/functions.js";
 
@@ -46,7 +45,7 @@ export default async (client, interaction) => {
         });
     }
 
-    console.log(amount)
+    console.log(amount);
 
     await interaction.reply({
         embeds: [

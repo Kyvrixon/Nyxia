@@ -4,10 +4,9 @@ import { footer } from "../../../utils/functions.js";
 import { errEmbed } from "../../../utils/embeds.js";
 
 export default async (client, interaction) => {
-    let fileName, model, value;
-    model = [guildModel];
-    value = interaction.guild.id;
-    fileName = "server-" + interaction.guild.id;
+    const model = [guildModel];
+    const value = interaction.guild.id;
+    const fileName = "server-" + interaction.guild.id;
 
     async function downloadData(models, value) {
         const data = {};
@@ -20,8 +19,8 @@ export default async (client, interaction) => {
 
     async function createAttachment(data, name) {
         const json = JSON.stringify(data, null, 2);
-        const buffer = Buffer.from(json, 'utf-8');
-        return new AttachmentBuilder(buffer, { name: name + '.json' });
+        const buffer = Buffer.from(json, "utf-8");
+        return new AttachmentBuilder(buffer, { name: name + ".json" });
     }
 
     if (interaction.guild.ownerId !== interaction.user.id) {
@@ -47,9 +46,9 @@ export default async (client, interaction) => {
             embeds: [embed],
             files: [attachment]
         });
-    } catch (error) {
+    } catch {
         await interaction.editReply("I couldn't send you a DM, please make sure your DMs are open.");
         return;
     }
     await interaction.editReply("I have sent you a DM with the data.");
-}
+};

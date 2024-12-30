@@ -1,6 +1,6 @@
-import { basicEmbed, errEmbed } from '../../../utils/embeds.js';
-import guildModel from '../../../models/guild.js';
-import { createLeaderboard, getEmoji, checkPermissions, delay } from '../../../utils/functions.js';
+import { errEmbed } from "../../../utils/embeds.js";
+import guildModel from "../../../models/guild.js";
+import { checkPermissions } from "../../../utils/functions.js";
 
 export default async (client, interaction) => {
     if (!await checkPermissions([], ["ManageGuild"], interaction, "user", "self")) {
@@ -14,6 +14,6 @@ export default async (client, interaction) => {
 
     const data = await guildModel.findOne({ guild: interaction.guild.id });
     if (!data.configs.confess.channel) {
-        data.configs.confess.channel = interaction.options.getChannel("channel")
+        data.configs.confess.channel = interaction.options.getChannel("channel");
     }
-}
+};

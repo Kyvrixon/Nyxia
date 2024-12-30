@@ -23,15 +23,15 @@ export default async (client, interaction) => {
 
         const embed = new EmbedBuilder()
             .setColor("DarkButNotBlack")
-            .setTitle(`Required Permissions`)
-            .setDescription(`> To ensure proper functionality, please verify that I have the necessary permissions listed below. Note that running this command in a different channel might produce varying results due to specific channel permissions.`)
+            .setTitle("Required Permissions")
+            .setDescription("> To ensure proper functionality, please verify that I have the necessary permissions listed below. Note that running this command in a different channel might produce varying results due to specific channel permissions.")
             .setFooter(footer());
 
         const groups = 2;
         const chunks = splitIntoChunks(permissionsText, groups);
 
         chunks.forEach(chunk => {
-            embed.addFields({ name: '\u200B', value: chunk.join("\n"), inline: true });
+            embed.addFields({ name: "\u200B", value: chunk.join("\n"), inline: true });
         });
 
         function splitIntoChunks(array, groups) {
@@ -49,4 +49,4 @@ export default async (client, interaction) => {
     } catch (err) {
         interaction.reply({ content: null, embeds: [errEmbed("Something went wrong when executing this command", err, interaction, "Hmm...")] });
     }
-}
+};

@@ -1,16 +1,16 @@
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import Discord, { ChannelType, PermissionFlagsBits } from "discord.js";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import Discord, { PermissionFlagsBits } from "discord.js";
 import "colors";
 import fs from "node:fs";
 import user from "../models/user.js";
-import Logger from './logger.js';
+import Logger from "./logger.js";
 import { client } from "../bot.js";
-import { errEmbed } from './embeds.js';
+import { errEmbed } from "./embeds.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "..", 'package.json'), 'utf-8'));
+const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "..", "package.json"), "utf-8"));
 
 /**
  * Handles a command interaction.
@@ -34,14 +34,14 @@ export const handleCmd = async (client = null, interaction = null, ...extras) =>
         y = null;
     }
     let filePath = path.join(__dirname, "..", "commands", "src");
-    if (x) filePath = path.join(filePath, x);
-    if (z) filePath = path.join(filePath, z);
-    if (y) filePath = path.join(filePath, y + ".js");
-    else filePath = path.join(filePath, ".js");
+    if (x) {filePath = path.join(filePath, x);}
+    if (z) {filePath = path.join(filePath, z);}
+    if (y) {filePath = path.join(filePath, y + ".js");}
+    else {filePath = path.join(filePath, ".js");}
 
     const cmd = await import("file://" + filePath);
     return cmd.default(client, interaction, ...extras);
-}
+};
 
 /**
  * Creates a paginated leaderboard embed with navigation buttons. Just remember that this handles the rest of the interactions so it should be final.
@@ -97,7 +97,7 @@ export const createLeaderboard = async (title, txt, interaction, pageCount = 10,
         .addComponents(await createButton("forward_button", "next", lb.length <= pageCount));
 
 
-    const replyMethod = interaction.deferred || interaction.replied ? 'editReply' : 'reply';
+    const replyMethod = interaction.deferred || interaction.replied ? "editReply" : "reply";
     let msg;
     try {
         msg = await interaction[replyMethod]({
@@ -109,7 +109,7 @@ export const createLeaderboard = async (title, txt, interaction, pageCount = 10,
             {
                 embeds: [errEmbed("Something went wrong while trying to initialise a module", e, interaction)]
             }
-        )
+        );
     }
 
     // safeguard
@@ -125,7 +125,7 @@ export const createLeaderboard = async (title, txt, interaction, pageCount = 10,
         // --------------------------------------------------------------------------------------------
         //                               safeguard from extra components
         // --------------------------------------------------------------------------------------------
-        if (btn.customId !== 'back_button' && btn.customId !== 'page_info' && btn.customId !== 'forward_button') return;
+        if (btn.customId !== "back_button" && btn.customId !== "page_info" && btn.customId !== "forward_button") {return;}
         // --------------------------------------------------------------------------------------------
 
         if (btn.user.id === (isMessage ? interaction.author.id : interaction.user.id)) {
@@ -209,9 +209,9 @@ export const createLeaderboard = async (title, txt, interaction, pageCount = 10,
  */
 export const footer = (text, pic) => {
     return {
-        text: `${text ? `${text}\n` : ''}© Kyvrixon 2024 | ${packageJson.version}`,
+        text: `${text ? `${text}\n` : ""}© Kyvrixon 2024 | ${packageJson.version}`,
         iconURL: pic || null
-    }
+    };
 };
 
 /**
@@ -226,8 +226,8 @@ export const devCheck = async (input) => {
             : typeof input === "string" ? input
                 : false;
 
-    if (!userId) return false;
-    if (userId === "981755777754755122") return true;
+    if (!userId) {return false;}
+    if (userId === "981755777754755122") {return true;}
 
     try {
         const data = await user.findOne({ user: userId }).exec();
@@ -364,13 +364,13 @@ export const checkPermissions = async (botPermissions, userPermissions, source, 
  * @returns 
  */
 export const isValidColour = (input) => {
-    if (typeof input === 'string') {
-        if (Discord.Colors[input]) return true;
-        if (/^#?[0-9A-Fa-f]{6}$/.test(input)) return true;
-        if (/^0x[0-9A-Fa-f]{6}$/.test(input)) return true;
+    if (typeof input === "string") {
+        if (Discord.Colors[input]) {return true;}
+        if (/^#?[0-9A-Fa-f]{6}$/.test(input)) {return true;}
+        if (/^0x[0-9A-Fa-f]{6}$/.test(input)) {return true;}
     }
 
-    if (typeof input === 'number') {
+    if (typeof input === "number") {
         return input >= 0 && input <= 0xFFFFFF;
     }
 
@@ -425,7 +425,7 @@ export const getEmojiUrl = (name) => {
  */
 export const convertToUnix = (date) => {
     return Math.floor(date / 1000);  
-}
+};
 
 
 //===================
@@ -441,4 +441,4 @@ export default {
     getEmoji,
     getEmojiUrl,
     convertToUnix
-}
+};

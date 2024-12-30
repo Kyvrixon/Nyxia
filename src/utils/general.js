@@ -56,10 +56,10 @@ export const emojisList = {
     cog: "https://cdn3.emoji.gg/emojis/9733-aesthetic-settings.png",
     arrow_left: "https://cdn3.emoji.gg/emojis/81985-left.png",
     arrow_right: "https://cdn3.emoji.gg/emojis/61991-right.png"
-}
+};
 
 export default {
     permissions,
     userFlagValues,
     emojisList
-}
+};

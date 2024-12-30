@@ -2,7 +2,7 @@ import AFK from "./afk.js";
 import { basicEmbed } from "../embeds.js";
 
 export const afkHandler = async (client, message) => {
-    if (message.author.id === client.user.id) return;
+    if (message.author.id === client.user.id) {return;}
 
     let msg1;
 
@@ -51,7 +51,7 @@ export const afkHandler = async (client, message) => {
         for (const u of message.mentions.users.values()) {
 
             // prevent self pinging
-            if (u.id === message.author.id) continue; 
+            if (u.id === message.author.id) {continue;} 
 
             if (!message.content.includes("@here") && !message.content.includes("@everyone")) {
                 const isAFK = await AFK.check(u);
@@ -89,6 +89,6 @@ export const afkHandler = async (client, message) => {
 
     await Promise.all([a(), b()]);
 
-}
+};
 
 export default afkHandler;

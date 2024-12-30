@@ -1,6 +1,6 @@
 import { errEmbed } from "../../utils/embeds.js";
 import Logger from "../../utils/logger.js";
-import { handleCmd, devCheck } from "../../utils/functions.js";
+import { handleCmd } from "../../utils/functions.js";
 
 export default {
 	name: "interactionCreate",
@@ -11,7 +11,7 @@ export default {
 			!interaction.isChatInputCommand() ||
 			!client ||
 			!interaction
-		) return;
+		) {return;}
 
 		try {
 			const command = client.commands?.get(interaction.commandName);
@@ -24,7 +24,7 @@ export default {
 						embeds: [
 							errEmbed(`Failed to run command ${interaction?.commandName ?? undefined}. Please contact the developer.`, e, interaction, "Failed to initiate command")
 						]
-					})
+					});
 				}
 			}
 
@@ -42,7 +42,7 @@ export default {
 						],
 						ephemeral: true
 					}
-				)
+				);
 			}
 
 			return await command.init(client, interaction);

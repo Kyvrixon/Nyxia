@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import { userFlagValues } from '../utils/general.js';
+import mongoose from "mongoose";
+import { userFlagValues } from "../utils/general.js";
 
 
 const bannedFromSchema = new mongoose.Schema(
@@ -61,4 +61,4 @@ const userSchema = new mongoose.Schema(
     }
 );
 
-export default mongoose.model('user', userSchema);
+export default mongoose.model("user", userSchema);

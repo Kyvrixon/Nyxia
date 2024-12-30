@@ -1,5 +1,5 @@
 import guildModel from "../../models/guild.js";
-import genModel from "../../models/general.js"
+import genModel from "../../models/general.js";
 import { basicEmbed } from "../../utils/embeds.js";
 import { ActionRowBuilder, ButtonStyle, ButtonBuilder } from "discord.js";
 import { getInvite } from "../../utils/functions.js";
@@ -38,7 +38,7 @@ export default {
                 )
               ]
             }
-          )
+          );
         }
       } catch { };
 
@@ -87,12 +87,12 @@ export default {
         },
         {
           name: "Guild Icon",
-          value: guild.iconURL({ size: 4096 }) ? `[Click here](${guild.iconURL({ size: 4096 })})` : 'No Icon',
+          value: guild.iconURL({ size: 4096 }) ? `[Click here](${guild.iconURL({ size: 4096 })})` : "No Icon",
           inline: true
         },
         {
           name: "Guild Banner",
-          value: guild.bannerURL({ size: 4096 }) ? `[Click here](${guild.bannerURL({ size: 4096 })})` : 'No Banner',
+          value: guild.bannerURL({ size: 4096 }) ? `[Click here](${guild.bannerURL({ size: 4096 })})` : "No Banner",
           inline: true
         }
       ],
@@ -106,7 +106,7 @@ export default {
       guild.iconURL({ size: 4096 }),
       guild.bannerURL({ size: 4096 })
     );
-    const invite = await getInvite(guild, null)
+    const invite = await getInvite(guild, null);
     const row = new ActionRowBuilder()
       .addComponents(
         new ButtonBuilder()

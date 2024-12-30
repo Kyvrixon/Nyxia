@@ -1,10 +1,10 @@
-import { REST, Routes } from 'discord.js';
-import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import Discord from 'discord.js';
+import { REST, Routes } from "discord.js";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import Discord from "discord.js";
 import Logger from "../utils/logger.js";
-import 'colors';
+import "colors";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -21,7 +21,7 @@ export default async (client) => {
             return fs.readdirSync(dirPath).filter(file => {
                 const filePath = path.join(dirPath, file);
                 const stat = fs.statSync(filePath);
-                return stat.isFile() && file.endsWith('.js') && !file.startsWith('_');
+                return stat.isFile() && file.endsWith(".js") && !file.startsWith("_");
             }).map(file => path.join(dirPath, file));
         };
 
@@ -38,19 +38,19 @@ export default async (client) => {
                     count++;
 
                 } else {
-                    throw new Error('Command is not set up correctly');
+                    throw new Error("Command is not set up correctly");
                 }
             } catch (error) {
                 console.error(error);
-                const location = filePath.replace(commandsPath, '').replace(/\\/g, ' > ').replace(/^ > /, '');
-                Logger.warn('Cmd Loader', `"${location}" isn't setup correctly`.red);
+                const location = filePath.replace(commandsPath, "").replace(/\\/g, " > ").replace(/^ > /, "");
+                Logger.warn("Cmd Loader", `"${location}" isn't setup correctly`.red);
                 errored++;
             };
         };
 
-        Logger.info('Cmd Loader', `Loaded ${count.toString().green} of ${commandFiles.length.toString().green} (${errored.toString().red} errored)`);
+        Logger.info("Cmd Loader", `Loaded ${count.toString().green} of ${commandFiles.length.toString().green} (${errored.toString().red} errored)`);
 
-        const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
+        const rest = new REST({ version: "10" }).setToken(process.env.BOT_TOKEN);
         try {
             if (!process.env.dev) {
                 await rest.put(
@@ -66,12 +66,12 @@ export default async (client) => {
             return;
 
         } catch (error) {
-            console.log(error)
-            Logger.error('Cmd Loader', 'Failed to register', error);
+            console.log(error);
+            Logger.error("Cmd Loader", "Failed to register", error);
             process.exit(1);
         }
     } catch (error) {
-        Logger.error('Cmd Loader', error.message, error);
+        Logger.error("Cmd Loader", error.message, error);
         process.exit(1);
     }
 };

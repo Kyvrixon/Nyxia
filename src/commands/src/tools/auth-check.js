@@ -1,11 +1,11 @@
-import { EmbedBuilder } from 'discord.js';
+import { EmbedBuilder } from "discord.js";
 import { footer } from "../../../utils/functions.js";
-import { errEmbed } from '../../../utils/embeds.js';
+import { errEmbed } from "../../../utils/embeds.js";
 import model from "../../../models/user.js";
-import Logger from '../../../utils/logger.js';
+import Logger from "../../../utils/logger.js";
 
 export default async (client, interaction) => {
-    const target = interaction.options.getUser('user');
+    const target = interaction.options.getUser("user");
     const member = interaction.guild.members.cache.get(target) || client.users.cache.get(target) || await client.users.fetch(target).catch(() => null);
 
     if (member.id === "1309736362454421505") {

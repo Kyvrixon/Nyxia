@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const affiliates = new mongoose.Schema(
     {
@@ -31,7 +31,7 @@ const banSchema = new mongoose.Schema(
         reason: { type: String, required: true },
         appealable: { type: Boolean, required: true }
     }
-)
+);
 
 const Schema = new mongoose.Schema(
     {
@@ -46,4 +46,4 @@ const Schema = new mongoose.Schema(
     }
 );
 
-export default mongoose.model('general', Schema);
+export default mongoose.model("general", Schema);

@@ -3,13 +3,12 @@ import userModel from "../../../models/user.js";
 import { footer } from "../../../utils/functions.js";
 
 export default async (client, interaction,) => {
-    let fileName, models, value;
-    models = [
+    const models = [
         userModel,
         //confessionsModel,
     ];
-    value = interaction.user.id;
-    fileName = "user-" + interaction.user.id;
+    const value = interaction.user.id;
+    const fileName = "user-" + interaction.user.id;
 
     async function downloadData(models, value) {
         const data = {};
@@ -22,8 +21,8 @@ export default async (client, interaction,) => {
 
     async function createAttachment(data, name) {
         const json = JSON.stringify(data, null, 2);
-        const buffer = Buffer.from(json, 'utf-8');
-        return new AttachmentBuilder(buffer, { name: name + '.json' });
+        const buffer = Buffer.from(json, "utf-8");
+        return new AttachmentBuilder(buffer, { name: name + ".json" });
     }
 
     await interaction.deferReply({ fetchReply: true });
@@ -42,9 +41,9 @@ export default async (client, interaction,) => {
             embeds: [embed],
             files: [attachment]
         });
-    } catch (error) {
+    } catch {
         await interaction.editReply("It appears your dms are closed. Please allow messages from server members before trying again!");
         return;
     }
     await interaction.editReply("Please check your dms for your data!");
-}
+};

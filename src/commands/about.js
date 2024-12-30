@@ -1,5 +1,5 @@
-import { SlashCommandBuilder } from 'discord.js';
-import { basicEmbed } from "../utils/embeds.js"
+import { SlashCommandBuilder } from "discord.js";
+import { basicEmbed } from "../utils/embeds.js";
 
 export default {
     dev: false,
@@ -7,8 +7,8 @@ export default {
     beta: true,
 
     data: new SlashCommandBuilder()
-        .setName('about')
-        .setDescription('❓Learn about me!')
+        .setName("about")
+        .setDescription("❓Learn about me!")
 
     ,
     async init(client, interaction) {
@@ -28,6 +28,6 @@ export default {
                 )
             ],
             ephemeral: true
-        })
+        });
     }
 };

@@ -1,10 +1,10 @@
-import dotenv from 'dotenv';
-import 'colors';
-import { Client, GatewayIntentBits, Partials } from 'discord.js';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import Logger from './utils/logger.js';
+import dotenv from "dotenv";
+import "colors";
+import { Client, GatewayIntentBits, Partials } from "discord.js";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import Logger from "./utils/logger.js";
 import model from "./models/user.js";
 
 dotenv.config();
@@ -42,9 +42,9 @@ async function loadModules() {
         }
         return arrayOfFiles;
     }
-    const moduleFiles = await getAllFiles(path.join(__dirname, 'modules'));
+    const moduleFiles = await getAllFiles(path.join(__dirname, "modules"));
     for (const file of moduleFiles) {
-        if (file.endsWith('.js') && !path.basename(file).startsWith('_') && !['database.js', 'functions.js'].includes(path.basename(file))) {
+        if (file.endsWith(".js") && !path.basename(file).startsWith("_") && !["database.js", "functions.js"].includes(path.basename(file))) {
             const module = await import(`file://${file}`);
             await module.default(client);
             function delay(ms) {
@@ -60,9 +60,9 @@ async function start() {
     Logger.info("Init", "Starting...");
 
     const startTime = Date.now();
-    const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json'), 'utf-8'));
+    const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "../package.json"), "utf-8"));
     client.package = packageJson;
-    const databaseModule = await import(`file://${path.join(__dirname, 'modules', 'database.js')}`);
+    const databaseModule = await import(`file://${path.join(__dirname, "modules", "database.js")}`);
     await databaseModule.default();
     await loadModules();
     const data = await model.findOne({
@@ -76,14 +76,14 @@ async function start() {
                     common: ["dev"]
                 }
             }
-        )
+        );
         await newSave.save();
     }
 
     await client.login(process.env.BOT_TOKEN);
 
     const endTime = Date.now();
-    Logger.info("Init", 'Completed in ' + `${parseInt((endTime - startTime) / 1000)}s`.green);
+    Logger.info("Init", "Completed in " + `${parseInt((endTime - startTime) / 1000)}s`.green);
 }
 
 start();

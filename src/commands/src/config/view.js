@@ -1,6 +1,6 @@
-import { basicEmbed, errEmbed } from '../../../utils/embeds.js';
-import guildModel from '../../../models/guild.js';
-import { createLeaderboard, getEmoji, checkPermissions, delay } from '../../../utils/functions.js';
+import { basicEmbed, errEmbed } from "../../../utils/embeds.js";
+import guildModel from "../../../models/guild.js";
+import { createLeaderboard, getEmoji, checkPermissions, delay } from "../../../utils/functions.js";
 
 export default async (client, interaction) => {
     if (!await checkPermissions([], ["ManageGuild"], interaction, "user", "self")) {
@@ -26,7 +26,7 @@ export default async (client, interaction) => {
                 null
             )
         ]
-    })
+    });
 
     let config;
     const guildData = await guildModel.findOne({ guild: interaction.guild.id });
@@ -37,7 +37,7 @@ export default async (client, interaction) => {
             embeds: [
                 errEmbed("No configuration data has been found for this server so default data has been created. Run the command again to see the changes.", null, interaction, "No data")
             ]
-        })
+        });
     } else {
         config = guildData.configs;
     }
@@ -65,4 +65,4 @@ export default async (client, interaction) => {
     await delay(Math.floor(Math.random() * 10) + 1);
 
     return await createLeaderboard("Current Configurations", listArray, interaction, 1);
-}
+};

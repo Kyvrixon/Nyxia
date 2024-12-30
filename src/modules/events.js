@@ -1,8 +1,8 @@
-import path from 'path';
-import fs from 'fs';
-import { fileURLToPath, pathToFileURL } from 'url';
+import path from "path";
+import fs from "fs";
+import { fileURLToPath, pathToFileURL } from "url";
 import Logger from "../utils/logger.js";
-import 'colors';
+import "colors";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 export default async (client) => {
     try {
         let count = 0;
-        const eventsPath = path.join(__dirname, '../events');
+        const eventsPath = path.join(__dirname, "../events");
 
         const readEventFiles = (dirPath) => {
             return fs.readdirSync(dirPath).reduce((files, file) => {
@@ -18,7 +18,7 @@ export default async (client) => {
                 const stat = fs.statSync(filePath);
                 if (stat.isDirectory()) {
                     return files.concat(readEventFiles(filePath));
-                } else if (file.endsWith('.js') && !file.startsWith("_")) {
+                } else if (file.endsWith(".js") && !file.startsWith("_")) {
                     return files.concat(filePath);
                 }
                 return files;

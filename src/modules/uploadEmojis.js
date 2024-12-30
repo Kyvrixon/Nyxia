@@ -57,13 +57,13 @@ export default async (client) => {
           }
 
           const imageBuffer = await imageResponse.arrayBuffer();
-          const base64Image = Buffer.from(imageBuffer).toString('base64');
+          const base64Image = Buffer.from(imageBuffer).toString("base64");
 
           const uploadResponse = await fetch(`https://discord.com/api/v10/applications/${process.env.BOT_ID}/emojis`, {
-            method: 'POST',
+            method: "POST",
             headers: {
               Authorization: `Bot ${process.env.BOT_TOKEN}`,
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
             body: JSON.stringify({
               name: emojiName,

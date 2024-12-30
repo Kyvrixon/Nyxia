@@ -1,4 +1,4 @@
-import { createLeaderboard } from '../../../utils/functions.js';
+import { createLeaderboard } from "../../../utils/functions.js";
 
 export default async (client, interaction) => {
     try {
@@ -7,7 +7,7 @@ export default async (client, interaction) => {
     } catch (e) {
         console.log(e);
     }
-}
+};
 
 
 

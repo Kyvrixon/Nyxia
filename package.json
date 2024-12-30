@@ -11,5 +11,9 @@
     "mongoose": "^8.8.4",
     "node-cron": "^3.0.3",
     "riffy": "^1.0.7-rc.2"
+  },
+  "devDependencies": {
+    "eslint": "^9.17.0",
+    "eslint-plugin-unused-imports": "^4.1.4"
   }
 }

@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from 'discord.js';
+import { SlashCommandBuilder } from "discord.js";
 import { handleCmd } from "../utils/functions.js";
 
 export default {
@@ -9,17 +9,17 @@ export default {
     category: "Utility",
 
     data: new SlashCommandBuilder()
-        .setName('download')
-        .setDescription('📂 Download data from the bot')
+        .setName("download")
+        .setDescription("📂 Download data from the bot")
         .addSubcommand(subcommand =>
             subcommand
-                .setName('user')
-                .setDescription('📂 Download user data from the bot')
+                .setName("user")
+                .setDescription("📂 Download user data from the bot")
         )
         .addSubcommand(subcommand =>
             subcommand
-                .setName('server')
-                .setDescription('📂 Download server data from the bot')
+                .setName("server")
+                .setDescription("📂 Download server data from the bot")
         )
     ,
     async init(client, interaction) {

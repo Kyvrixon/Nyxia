@@ -6,25 +6,24 @@ export default async (client, interaction) => {
     const completeArray = [];
     const guild = await client.guilds.fetch(interaction.guild.id);
     const rawCmds = await guild.commands.fetch();
-    let resultsPerPage = interaction.options.getInteger('number') || 5;
+    const resultsPerPage = interaction.options.getInteger("number") || 5;
     if (resultsPerPage > 10) {
         return interaction.reply({
             embeds: [
-                errEmbed("You can only have max of 10 per page and minimum of 1!", null, interaction, "oopsie...")
+                errEmbed("You can only have max of 10 per page and minimum of 1!", null, interaction, "Oopsie...")
             ]
         });
     }
     if (resultsPerPage < 1) {
         return interaction.reply({
             embeds: [
-                errEmbed("You can only have max of 10 per page and minimum of 1!", null, interaction, "oopsie...")
+                errEmbed("You can only have max of 10 per page and minimum of 1!", null, interaction, "Oopsie...")
             ]
         });
     }
 
     const processSubcommands = (parentName, subcommands, baseId) => {
         for (const subcommand of subcommands) {
-            // Construct full command name with subcommands/subcommand groups
             const fullName = `${parentName} ${subcommand.name}`;
             const commandObject = {
                 title: fullName,
@@ -43,21 +42,17 @@ export default async (client, interaction) => {
     };
 
     for (const command of rawCmds.values()) {
-        // Check if the command has subcommands or subcommand groups
         if (command.options && command.options.some(option => option.type === 1 || option.type === 2)) {
             const subcommands = command.options.filter(option => option.type === 1);
             const subcommandGroups = command.options.filter(option => option.type === 2);
 
-            // Process subcommands
             processSubcommands(command.name, subcommands, command.id);
 
-            // Process subcommand groups and their subcommands
             for (const group of subcommandGroups) {
                 processSubcommands(`${command.name} ${group.name}`, group.options || [], command.id);
             }
 
         } else {
-            // Process commands without subcommands or subcommand groups
             const commandObject = {
                 title: command.name,
                 desc: command.description || "No description available",
@@ -75,4 +70,4 @@ export default async (client, interaction) => {
     }
 
     return createLeaderboard("Command List", completeArray, interaction, resultsPerPage, null);
-}
+};

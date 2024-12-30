@@ -1,6 +1,5 @@
 import { SlashCommandBuilder } from "discord.js";
 import { basicEmbed } from "../utils/embeds.js";
-import AFK from "../utils/handlers/afk.js";
 
 export default {
     dev: false,
@@ -18,21 +17,18 @@ export default {
 
     ,
     async init(client, interaction) {
-        await AFK.set(interaction.user, Date.now(), (interaction.options.getString("message") || "None given."));
+        // get optionsku
+        // ...
 
+
+        // log input and output to a channel
+        // ...
+
+
+        // final int. reply with output
         return interaction.reply({
             embeds: [
-                basicEmbed(
-                    "AFK Set!",
-                    "> Your AFK has been successfully set, enjoy your break!",
-                    null,
-                    "Green",
-                    null,
-                    "Just a reminder your AFK affects ALL servers you share with me!",
-                    null,
-                    null,
-                    null
-                )
+                basicEmbed()
             ],
             ephemeral: true
         });

@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from 'discord.js';
+import { SlashCommandBuilder } from "discord.js";
 import { handleCmd } from "../utils/functions.js";
 
 export default {
@@ -9,19 +9,19 @@ export default {
     category: "Testing",
 
     data: new SlashCommandBuilder()
-        .setName('tests')
-        .setDescription('test commands')
+        .setName("tests")
+        .setDescription("test commands")
 
         .addSubcommand(subcommand =>
             subcommand
-                .setName('lb')
-                .setDescription('description')
+                .setName("lb")
+                .setDescription("description")
         )
 
         .addSubcommand(subcommand =>
             subcommand
-                .setName('error')
-                .setDescription('description')
+                .setName("error")
+                .setDescription("description")
         )
 
     ,
@@ -30,8 +30,8 @@ export default {
             await handleCmd(client, interaction);
             return;
         } catch (e) {
-            console.log(e)
-            return interaction.reply("something went wrong")
+            console.log(e);
+            return interaction.reply("something went wrong");
         }
     }
 };
