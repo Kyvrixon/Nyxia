@@ -35,7 +35,7 @@ export default [
 			"no-empty-function": "error",
 			"prefer-const": "error",
 			indent: ["warn", "tab"],
-			// "no-console": "warn",
+			// "no-console": "warn", remember to comment this out later
 			"prettier/prettier": [
 				"error",
 				{

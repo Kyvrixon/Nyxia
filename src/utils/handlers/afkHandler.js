@@ -105,6 +105,5 @@ export const afkHandler = async (client, message) => {
 	}
 
 	await Promise.all([a(), b()]);
+	return;
 };
-
-export default afkHandler;
