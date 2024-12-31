@@ -1,4 +1,4 @@
-import userModel from "../../models/user.js";
+import userModel from "../models/user.js";
 
 const AFK = {
 	/**

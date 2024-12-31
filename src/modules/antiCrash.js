@@ -2,7 +2,7 @@ import Logger from "../utils/logger.js";
 import "colors";
 
 export default async () => {
-	process.on("unhandledRejection", (reason /* promise */) => {
+	process.on("unhandledRejection", (reason /*, promise */) => {
 		console.log(" ");
 		console.log(reason);
 		Logger.error("Unhandled Rejection", reason.toString().red, reason);
