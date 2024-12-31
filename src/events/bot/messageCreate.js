@@ -6,16 +6,20 @@ export default {
 	once: false,
 
 	async init(client, message) {
-		if (!message || message.bot || !message.guild) {return;}
+		if (!message || message.bot || !message.guild) {
+			return;
+		}
 
 		if (message.content === "ABC123") {
-			await AFK.set(message.author, Date.now(), "testing afk reason message");
+			await AFK.set(
+				message.author,
+				Date.now(),
+				"testing afk reason message"
+			);
 			await message.reply("temp afk set");
 			return;
 		}
 
 		afkHandler(client, message);
-
-
-	}
+	},
 };

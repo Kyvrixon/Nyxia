@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import Logger from "../utils/logger.js";
 
 export default async () => {
-    /*
+	/*
     const connection = mongoose.connection;
 
     connection.on('connected', () => Logger.info('Database', 'Connected'));
@@ -12,13 +12,13 @@ export default async () => {
     connection.on('disconnecting', () => Logger.warn('Database', 'Disconnecting'));
     connection.on('close', () => Logger.info('Database', 'Connection closed'));
     */
-    try {
-        //Logger.info("Database", "Attempting connection...");
-        await mongoose.connect(process.env.DB_URL);
-        Logger.info("Database", "Connected!");
-    } catch (e) {
-        console.log(e);
-        Logger.error("Database", "Failed to connect", e);
-        process.exit(1);
-    }
+	try {
+		//Logger.info("Database", "Attempting connection...");
+		await mongoose.connect(process.env.DB_URL);
+		Logger.info("Database", "Connected!");
+	} catch (e) {
+		console.log(e);
+		Logger.error("Database", "Failed to connect", e);
+		process.exit(1);
+	}
 };

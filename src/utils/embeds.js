@@ -1,4 +1,20 @@
-import { ActionRowBuilder, BaseInteraction, ButtonBuilder, ButtonInteraction, ButtonStyle, ChannelSelectMenuInteraction, CommandInteraction, ContextMenuCommandInteraction, EmbedBuilder, MentionableSelectMenuInteraction, Message, ModalSubmitInteraction, RoleSelectMenuInteraction, StringSelectMenuInteraction, UserSelectMenuInteraction } from "discord.js";
+import {
+	ActionRowBuilder,
+	BaseInteraction,
+	ButtonBuilder,
+	ButtonInteraction,
+	ButtonStyle,
+	ChannelSelectMenuInteraction,
+	CommandInteraction,
+	ContextMenuCommandInteraction,
+	EmbedBuilder,
+	MentionableSelectMenuInteraction,
+	Message,
+	ModalSubmitInteraction,
+	RoleSelectMenuInteraction,
+	StringSelectMenuInteraction,
+	UserSelectMenuInteraction,
+} from "discord.js";
 import { client } from "../bot.js";
 import { footer, getInvite, isValidColour } from "./functions.js";
 import Logger from "./logger.js";
@@ -11,11 +27,19 @@ import Logger from "./logger.js";
  * @param {object} source - The source object that triggered for example interaction or message.
  * @returns {import('discord.js').EmbedBuilder} EmbedBuiler instance.
  */
-export const errEmbed = (message, e, s, title = "Oops.. something went wrong") => {
-	const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+export const errEmbed = (
+	message,
+	e,
+	s,
+	title = "Oops.. something went wrong"
+) => {
+	const characters =
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 	let code = "";
 	for (let i = 0; i < 10; i++) {
-		code += characters.charAt(Math.floor(Math.random() * characters.length));
+		code += characters.charAt(
+			Math.floor(Math.random() * characters.length)
+		);
 	}
 
 	const embedReply = new EmbedBuilder()
@@ -31,7 +55,7 @@ export const errEmbed = (message, e, s, title = "Oops.. something went wrong") =
 			.addFields({
 				name: "__Error Help__",
 				value: "> If the error affects functionality, join our support server, open a ticket, and share the **Error ID**. A dev may join to investigate, please grant necessary permissions they request. Use `/auth-check` to verify their identity first.",
-				inline: false
+				inline: false,
 			});
 	}
 
@@ -39,15 +63,25 @@ export const errEmbed = (message, e, s, title = "Oops.. something went wrong") =
 	return embedReply;
 
 	async function sendLog(error, source) {
-		if (!error || !source) {return;}
+		if (!error || !source) {
+			return;
+		}
 
-		if (!source instanceof Message || !source instanceof BaseInteraction) {
-			return Logger.error("function errEmbed", "Source object isnt of BaseInteraction or Message", error);
+		if (
+			(!source) instanceof Message ||
+			(!source) instanceof BaseInteraction
+		) {
+			return Logger.error(
+				"function errEmbed",
+				"Source object isnt of BaseInteraction or Message",
+				error
+			);
 		}
 
 		let cmdValueString = "";
 		if (source instanceof CommandInteraction) {
-			let group = null, sub = null;
+			let group = null,
+				sub = null;
 			try {
 				group = source.options.getSubcommandGroup();
 			} catch {
@@ -61,16 +95,13 @@ export const errEmbed = (message, e, s, title = "Oops.. something went wrong") =
 
 			const commandInfo = {
 				subcommandGroup: group,
-				subcommand: sub
+				subcommand: sub,
 			};
 			cmdValueString = `> \`/${source.commandName} ${commandInfo.subcommandGroup ? `${commandInfo.subcommandGroup} ` : ""}${commandInfo.subcommand || ""}\``;
-
 		} else if (source instanceof ContextMenuCommandInteraction) {
 			cmdValueString = `> \`/${source.commandName}\``;
-
 		} else if (source instanceof ModalSubmitInteraction) {
 			cmdValueString = `> \`Modal: ${source.customId}\``;
-
 		} else if (
 			source instanceof StringSelectMenuInteraction ||
 			source instanceof UserSelectMenuInteraction ||
@@ -79,72 +110,76 @@ export const errEmbed = (message, e, s, title = "Oops.. something went wrong") =
 			source instanceof ChannelSelectMenuInteraction
 		) {
 			cmdValueString = `> \`Select Menu: ${source.customId}\``;
-
 		} else if (source instanceof ButtonInteraction) {
 			cmdValueString = `> \`Button: ${source.customId}\``;
-
 		} else {
 			cmdValueString = "> `Unknown Interaction Type`";
 		}
 
 		const embedLog = new EmbedBuilder()
 			.setTitle("An error occurred")
-			.setDescription(`__**Error Message:**__ \`\`\`\n${error?.message}\`\`\`\n__**Stack Trace:**__ \`\`\`\n${error?.stack}\`\`\``)
+			.setDescription(
+				`__**Error Message:**__ \`\`\`\n${error?.message}\`\`\`\n__**Stack Trace:**__ \`\`\`\n${error?.stack}\`\`\``
+			)
 			.addFields(
 				{
 					name: "__Error Code__",
 					value: `> \`${code}\``,
-					inline: true
+					inline: true,
 				},
 				{
 					name: "__Server__",
 					value: `> \`${source?.guild?.name}\``,
-					inline: true
+					inline: true,
 				},
 				{
 					name: "__User__",
-					value: `> \`${(source instanceof Message ? source?.author?.username : source?.user?.username)}\``,
-					inline: true
+					value: `> \`${source instanceof Message ? source?.author?.username : source?.user?.username}\``,
+					inline: true,
 				},
 				{
 					name: "__Channel__",
-					value: `> \`${(source?.channel?.name || "Cannot find channel")}\`\n> <#${source?.channel?.id}>`,
-					inline: true
+					value: `> \`${source?.channel?.name || "Cannot find channel"}\`\n> <#${source?.channel?.id}>`,
+					inline: true,
 				},
 				{
 					name: "__Timestamp__",
 					value: `> <t:${Math.floor(new Date().getTime() / 1000)}:f>`,
-					inline: true
+					inline: true,
 				},
 				{
 					name: "__Command/Interaction__",
 					value: cmdValueString,
-					inline: true
+					inline: true,
 				}
 			);
 
-		const row = new ActionRowBuilder()
-			.addComponents(
-				new ButtonBuilder()
-					.setStyle(ButtonStyle.Link)
-					.setURL(await getInvite(source.guild, source.channel))
-					.setLabel("Click to join the server")
-			);
+		const row = new ActionRowBuilder().addComponents(
+			new ButtonBuilder()
+				.setStyle(ButtonStyle.Link)
+				.setURL(await getInvite(source.guild, source.channel))
+				.setLabel("Click to join the server")
+		);
 
-		const logChannel = client.channels.cache.get("1322722379113300018") || await client.channels.fetch("1322722379113300018");
+		const logChannel =
+			client.channels.cache.get("1322722379113300018") ||
+			(await client.channels.fetch("1322722379113300018"));
 		try {
 			await logChannel.send({ embeds: [embedLog], components: [row] });
 		} catch (err) {
-			Logger.error("function errEmbed", "Failed to log an error: " + err.message, err);
+			Logger.error(
+				"function errEmbed",
+				"Failed to log an error: " + err.message,
+				err
+			);
 			return;
 		}
 	}
 };
 
-
 /**
  * Creates a basic embed
- * 
+ *
  * @param {string} [title=null] - title
  * @param {string} [description=" "] - description
  * @param {Array<Object>} [fields=[]] - array of fields
@@ -157,14 +192,23 @@ export const errEmbed = (message, e, s, title = "Oops.. something went wrong") =
  * @returns {EmbedBuilder} - embed object
  */
 export const basicEmbed = (
-	title, description, fields, colour, author, footerText, timestamp, thumbnail, image
-) => new EmbedBuilder()
-	.setAuthor(author || null)
-	.setTitle(title || null)
-	.setDescription(description || " ")
-	.setFooter(footer(footerText))
-	.addFields(Array.isArray(fields) ? fields : [])
-	.setColor(isValidColour(colour) ? colour : "DarkButNotBlack")
-	.setTimestamp(timestamp)
-	.setThumbnail(thumbnail || null)
-	.setImage(image || null);
+	title,
+	description,
+	fields,
+	colour,
+	author,
+	footerText,
+	timestamp,
+	thumbnail,
+	image
+) =>
+	new EmbedBuilder()
+		.setAuthor(author || null)
+		.setTitle(title || null)
+		.setDescription(description || " ")
+		.setFooter(footer(footerText))
+		.addFields(Array.isArray(fields) ? fields : [])
+		.setColor(isValidColour(colour) ? colour : "DarkButNotBlack")
+		.setTimestamp(timestamp)
+		.setThumbnail(thumbnail || null)
+		.setImage(image || null);

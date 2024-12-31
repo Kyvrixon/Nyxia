@@ -1,67 +1,61 @@
 import userModel from "../../models/user.js";
 
 const AFK = {
-    /**
-     * Check the AFK status for a user
-     * 
-     * @param {Object} user - User object
-     */
-    check: async (user) => {
-        const data = await userModel.findOne({ user: user.id });
+	/**
+	 * Check the AFK status for a user
+	 *
+	 * @param {Object} user - User object
+	 */
+	check: async (user) => {
+		const data = await userModel.findOne({ user: user.id });
 
-        if (!data || !data.afk) {
-            return false;
-        } else
-            if (data && data.afk) {
-                return data.afk;
-            }
-    },
+		if (!data || !data.afk) {
+			return false;
+		} else if (data && data.afk) {
+			return data.afk;
+		}
+	},
 
-    /**
-     * Set the AFK status for a user.
-     * 
-     * @param {Object} user - User object
-     * @param {Date} time - Date
-     * @param {String} - Message
-     */
-    set: async (user, time, msg) => {
-        const data = await userModel.findOne({ user: user.id });
+	/**
+	 * Set the AFK status for a user.
+	 *
+	 * @param {Object} user - User object
+	 * @param {Date} time - Date
+	 * @param {String} - Message
+	 */
+	set: async (user, time, msg) => {
+		const data = await userModel.findOne({ user: user.id });
 
-        if (!data) {
-            const newData = new userModel({
-                user: user.id,
-                afk: {
-                    message: msg,
-                    time: time
-                }
-            });
-            await newData.save();
+		if (!data) {
+			const newData = new userModel({
+				user: user.id,
+				afk: {
+					message: msg,
+					time: time,
+				},
+			});
+			await newData.save();
+		} else if (data && (data.afk || !data.afk)) {
+			data.afk = {
+				message: msg,
+				time: time,
+			};
 
-        } else
-            if (data && (data.afk || !data.afk)) {
-                data.afk = {
-                    message: msg,
-                    time: time
-                };
+			await data.save();
+		}
 
-                await data.save();
-            }
+		return;
+	},
 
-        return;
-    },
-
-    /**
-     * Clear the AFK status for a user
-     * 
-     * @param {Object} user - User object
-     */
-    clear: async (user) => {
-        await userModel.updateOne(
-            { user: user.id },
-            { $unset: { afk: "" } }
-        );
-        return;
-    }
+	/**
+	 * Clear the AFK status for a user
+	 *
+	 * @param {Object} user - User object
+	 */
+	clear: async (user) => {
+		await userModel.updateOne({ user: user.id }, { $unset: { afk: "" } });
+		return;
+	},
 };
 
 export default AFK;
