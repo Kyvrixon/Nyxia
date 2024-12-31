@@ -4,42 +4,41 @@ import eslintPluginPrettier from "eslint-plugin-prettier";
 
 export default [
 	{
-		files: ["**/*.js"], // Matches all JavaScript files
+		files: ["**/*.js"],
 		languageOptions: {
-			ecmaVersion: 2021, // Enables ECMAScript 2021 features
-			sourceType: "module", // Allows import/export syntax
+			ecmaVersion: 2021,
+			sourceType: "module",
 			globals: {
-				...globals.node, // Enables Node.js global variables
+				...globals.node,
 			},
 		},
 		plugins: {
-			"unused-imports": unusedImports, // Correctly import the plugin
-			prettier: eslintPluginPrettier, // Integrates Prettier with ESLint
+			"unused-imports": unusedImports,
+			prettier: eslintPluginPrettier,
 		},
 		rules: {
-			quotes: ["error", "double"], // Enforce double quotes for strings
+			quotes: ["error", "double"],
 			"no-unused-vars": [
 				"error",
 				{
 					args: "after-used",
 					ignoreRestSiblings: true,
-					caughtErrors: "all", // Flag unused caught variables in try-catch blocks
+					caughtErrors: "all",
 				},
 			],
-			"unused-imports/no-unused-imports": "error", // Error on unused imports
-			semi: ["error", "always"], // Enforce semicolons
-			eqeqeq: ["error", "always"], // Enforce strict equality (===)
-			curly: ["error", "all"], // Enforce curly braces for all control statements
-			"no-var": "error", // Disallow var (use let/const instead)
-			"no-undef": "error", // Disallow undefined variables
-			"no-empty-function": "error", // Disallow empty functions
-			// "no-console": "warn", // Remove these in production. Use Logger() class instead
+			"unused-imports/no-unused-imports": "error",
+			semi: ["error", "always"],
+			eqeqeq: ["error", "always"],
+			curly: ["error", "all"],
+			"no-var": "error",
+			"no-undef": "error",
+			"no-empty-function": "error",
 			"prefer-const": "error",
-			indent: ["warn", "tab"], // 2 spaces for indentation
+			indent: ["warn", "tab"],
+			// "no-console": "warn",
 			"prettier/prettier": [
 				"error",
 				{
-					// Enforces Prettier formatting
 					semi: true,
 					singleQuote: false,
 					tabWidth: 4,
