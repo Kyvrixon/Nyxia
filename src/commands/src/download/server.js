@@ -1,7 +1,7 @@
 import { EmbedBuilder, AttachmentBuilder } from "discord.js";
-import guildModel from "../../../models/guild.js";
-import { footer } from "../../../utils/functions.js";
-import { errEmbed } from "../../../utils/embeds.js";
+import guildModel from "#models/guild.js";
+import { footer } from "#utils/functions.js";
+import { errEmbed } from "#utils/embeds.js";
 
 export default async (client, interaction) => {
 	const model = [guildModel];

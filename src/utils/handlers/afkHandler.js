@@ -1,5 +1,5 @@
 import AFK from "./afk.js";
-import { basicEmbed } from "../embeds.js";
+import { basicEmbed } from "#embeds.js";
 
 export const afkHandler = async (client, message) => {
 	if (message.author.id === client.user.id) {

@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import Discord from "discord.js";
-import Logger from "../utils/logger.js";
+import Logger from "#utils/logger.js";
 import "colors";
 
 const __filename = fileURLToPath(import.meta.url);

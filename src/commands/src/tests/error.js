@@ -1,4 +1,4 @@
-import { errEmbed } from "../../../utils/embeds.js";
+import { errEmbed } from "#utils/embeds.js";
 
 export default async (client, interaction) => {
 	const error = new Error("Test error");

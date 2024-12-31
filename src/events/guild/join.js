@@ -1,8 +1,8 @@
-import guildModel from "../../models/guild.js";
-import genModel from "../../models/general.js";
-import { basicEmbed } from "../../utils/embeds.js";
+import guildModel from "#models/guild.js";
+import genModel from "#models/general.js";
+import { basicEmbed } from "#utils/embeds.js";
 import { ActionRowBuilder, ButtonStyle, ButtonBuilder } from "discord.js";
-import { getInvite } from "../../utils/functions.js";
+import { getInvite } from "#utils/functions.js";
 
 export default {
 	name: "guildCreate",

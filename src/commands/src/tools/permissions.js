@@ -1,7 +1,7 @@
 import { EmbedBuilder, PermissionsBitField } from "discord.js";
-import { permissions } from "../../../utils/config.js";
-import { errEmbed } from "../../../utils/embeds.js";
-import { footer } from "../../../utils/functions.js";
+import { permissions } from "#utils/config.js";
+import { errEmbed } from "#utils/embeds.js";
+import { footer } from "#utils/functions.js";
 
 function convertCamelCaseToWords(text) {
 	return text.replace(/([A-Z])/g, " $1").replace(/^./, (str) => {

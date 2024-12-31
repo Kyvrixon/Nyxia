@@ -1,4 +1,4 @@
-import { createLeaderboard, getEmoji } from "../../../utils/functions.js";
+import { createLeaderboard, getEmoji } from "#utils/functions.js";
 
 export default async (client, interaction) => {
 	const emojiArray = [];

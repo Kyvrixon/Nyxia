@@ -1,6 +1,6 @@
-import { errEmbed } from "../../utils/embeds.js";
-import Logger from "../../utils/logger.js";
-import { handleCmd } from "../../utils/functions.js";
+import { errEmbed } from "#utils/embeds.js";
+import Logger from "#utils/logger.js";
+import { handleCmd } from "#utils/functions.js";
 
 export default {
 	name: "interactionCreate",

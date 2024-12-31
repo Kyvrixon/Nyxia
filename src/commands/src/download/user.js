@@ -1,6 +1,6 @@
 import { EmbedBuilder, AttachmentBuilder } from "discord.js";
-import userModel from "../../../models/user.js";
-import { footer } from "../../../utils/functions.js";
+import userModel from "#models/user.js";
+import { footer } from "#utils/functions.js";
 
 export default async (client, interaction) => {
 	const models = [

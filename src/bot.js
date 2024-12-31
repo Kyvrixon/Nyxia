@@ -4,8 +4,8 @@ import { Client, GatewayIntentBits, Partials } from "discord.js";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import Logger from "./utils/logger.js";
-import model from "./models/user.js";
+import Logger from "#utils/logger.js";
+import model from "#models/user.js";
 
 dotenv.config();
 

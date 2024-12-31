@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "discord.js";
-import { basicEmbed } from "../utils/embeds.js";
+import { basicEmbed } from "#utils/embeds.js";
 
 export default {
 	dev: false,

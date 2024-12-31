@@ -1,4 +1,4 @@
-import { basicEmbed } from "../../../utils/embeds";
+import { basicEmbed } from "#utils/embeds";
 
 export default async (client, interaction) => {
 	await interaction.reply({

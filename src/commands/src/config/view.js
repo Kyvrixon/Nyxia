@@ -1,11 +1,11 @@
-import { basicEmbed, errEmbed } from "../../../utils/embeds.js";
-import guildModel from "../../../models/guild.js";
+import { basicEmbed, errEmbed } from "#utils/embeds.js";
+import guildModel from "#models/guild.js";
 import {
 	createLeaderboard,
 	getEmoji,
 	checkPermissions,
 	delay,
-} from "../../../utils/functions.js";
+} from "#utils/functions.js";
 
 export default async (client, interaction) => {
 	if (

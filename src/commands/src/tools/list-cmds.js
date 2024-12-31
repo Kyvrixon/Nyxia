@@ -1,5 +1,5 @@
-import { errEmbed } from "../../../utils/embeds.js";
-import { createLeaderboard } from "../../../utils/functions.js";
+import { errEmbed } from "#utils/embeds.js";
+import { createLeaderboard } from "#utils/functions.js";
 
 export default async (client, interaction) => {
 	const cmdListArray = [];

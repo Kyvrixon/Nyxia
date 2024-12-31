@@ -3,9 +3,9 @@ import { fileURLToPath } from "node:url";
 import Discord, { PermissionFlagsBits } from "discord.js";
 import "colors";
 import fs from "node:fs";
-import user from "../models/user.js";
+import user from "#models/user.js";
 import Logger from "./logger.js";
-import { client } from "../bot.js";
+import { client } from "#bot.js";
 import { errEmbed } from "./embeds.js";
 
 const __filename = fileURLToPath(import.meta.url);

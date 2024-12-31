@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from "discord.js";
-import { basicEmbed } from "../utils/embeds.js";
-import AFK from "../utils/handlers/afk.js";
+import { basicEmbed } from "#utils/embeds.js";
+import AFK from "#utils/afk.js";
 
 export default {
 	dev: false,

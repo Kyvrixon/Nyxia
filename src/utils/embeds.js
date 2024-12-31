@@ -15,7 +15,7 @@ import {
 	StringSelectMenuInteraction,
 	UserSelectMenuInteraction,
 } from "discord.js";
-import { client } from "../bot.js";
+import { client } from "#bot.js";
 import { footer, getInvite, isValidColour } from "./functions.js";
 import Logger from "./logger.js";
 

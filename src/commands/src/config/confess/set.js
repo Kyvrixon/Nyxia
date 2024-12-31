@@ -1,6 +1,6 @@
-import { errEmbed } from "../../../utils/embeds.js";
-import guildModel from "../../../models/guild.js";
-import { checkPermissions } from "../../../utils/functions.js";
+import { errEmbed } from "#utils/embeds.js";
+import guildModel from "#models/guild.js";
+import { checkPermissions } from "#utils/functions.js";
 
 export default async (client, interaction) => {
 	if (

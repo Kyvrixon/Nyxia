@@ -1,5 +1,5 @@
-import { basicEmbed, errEmbed } from "../../../utils/embeds.js";
-import { checkPermissions } from "../../../utils/functions.js";
+import { basicEmbed, errEmbed } from "#utils/embeds.js";
+import { checkPermissions } from "#utils/functions.js";
 
 export default async (client, interaction) => {
 	if (

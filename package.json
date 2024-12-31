@@ -25,14 +25,14 @@
     "prettier": "^3.4.2"
   },
   "imports": {
-    "##": "./",
+    "##/*": "./*",
     "#pkg": "./package.json",
     "#bot": "./src/bot.js",
-    "#assets": "./src/assets",
-    "#cmd": "./src/commands",
-    "#events": "./src/events",
-    "#models": "./src/models",
-    "#modules": "./src/modules",
-    "#utils": "./src/utils"
+    "#assets/*": "./src/assets/*",
+    "#cmd/*": "./src/commands/*",
+    "#events/*": "./src/events/*",
+    "#models/*": "./src/models/*",
+    "#modules/*": "./src/modules/*",
+    "#utils/*": "./src/utils/*"
   }
 }

@@ -1,5 +1,5 @@
-import AFK from "../../utils/handlers/afk.js";
-import afkHandler from "../../utils/handlers";
+import AFK from "#utils/handlers/afk.js";
+import afkHandler from "#utils/handlers/afkHandler.js";
 
 export default {
 	name: "messageCreate",

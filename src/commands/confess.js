@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from "discord.js";
-import { handleCmd } from "../utils/functions.js";
-import { errEmbed } from "../utils/embeds.js";
+import { handleCmd } from "#utils/functions.js";
+import { errEmbed } from "#utils/embeds.js";
 
 export default {
 	dev: false,

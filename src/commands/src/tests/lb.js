@@ -1,4 +1,4 @@
-import { createLeaderboard } from "../../../utils/functions.js";
+import { createLeaderboard } from "#utils/functions.js";
 
 export default async (client, interaction) => {
 	try {
