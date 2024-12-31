@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 export default async (client) => {
 	try {
 		let count = 0;
-		const eventsPath = path.join(__dirname, "#events");
+		const eventsPath = path.join(__dirname, "../events");
 
 		const readEventFiles = (dirPath) => {
 			return fs.readdirSync(dirPath).reduce((files, file) => {

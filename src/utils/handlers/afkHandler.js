@@ -1,5 +1,5 @@
-import AFK from "./afk.js";
-import { basicEmbed } from "#embeds.js";
+import AFK from "#utils/afk.js";
+import { basicEmbed } from "#utils/embeds.js";
 
 export const afkHandler = async (client, message) => {
 	if (message.author.id === client.user.id) {
@@ -107,3 +107,5 @@ export const afkHandler = async (client, message) => {
 	await Promise.all([a(), b()]);
 	return;
 };
+
+export default afkHandler;

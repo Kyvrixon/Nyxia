@@ -1,4 +1,4 @@
-import AFK from "#utils/handlers/afk.js";
+import AFK from "#utils/afk.js";
 import afkHandler from "#utils/handlers/afkHandler.js";
 
 export default {

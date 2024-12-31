@@ -5,7 +5,7 @@ import "colors";
 import fs from "node:fs";
 import user from "#models/user.js";
 import Logger from "./logger.js";
-import { client } from "#bot.js";
+import { client } from "#bot";
 import { errEmbed } from "./embeds.js";
 
 const __filename = fileURLToPath(import.meta.url);
