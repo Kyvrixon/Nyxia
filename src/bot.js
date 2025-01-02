@@ -60,7 +60,7 @@ async function loadModules() {
 }
 
 async function start() {
-	console.clear();
+	console.clear(); // eslint-disable-line no-console
 	Logger.info("Init", "Starting...");
 
 	const startTime = Date.now();

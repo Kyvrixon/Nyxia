@@ -8,7 +8,7 @@ export default async (client, interaction) => {
 		const emoji = getEmoji(e.name);
 
 		if (currentString) {
-			currentString += ` ${emoji}`;
+			currentString += `   ${emoji}`; // 3 spaces gap
 		} else {
 			currentString = `${emoji}`;
 		}

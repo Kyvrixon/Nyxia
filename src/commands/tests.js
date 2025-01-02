@@ -1,5 +1,6 @@
 import { SlashCommandBuilder } from "discord.js";
 import { handleCmd } from "#utils/functions.js";
+import Logger from "#utils/logger";
 
 export default {
 	dev: true,
@@ -25,7 +26,7 @@ export default {
 			await handleCmd(client, interaction);
 			return;
 		} catch (e) {
-			console.log(e);
+			Logger.error("/tests", "Failed to run command: " + e.message, e);
 			return interaction.reply("something went wrong");
 		}
 	},

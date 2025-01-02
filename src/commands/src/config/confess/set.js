@@ -26,8 +26,11 @@ export default async (client, interaction) => {
 		});
 	}
 
-	const data = await guildModel.findOne({ guild: interaction.guild.id });
-	if (!data.configs.confess.channel) {
+	let data = await guildModel.findOne({ guild: interaction.guild.id });
+
+	if (data.configs.confess) {
+		data = data.configs.confess;
+	} else if (!data.configs.confess.channel) {
 		data.configs.confess.channel =
 			interaction.options.getChannel("channel");
 	}

@@ -10,6 +10,7 @@ export default {
 		.setName("dev")
 		.setDescription("🔨 Developer Commands")
 
+		// rlly dunno if this command is needed at all
 		.addSubcommand((x) =>
 			x
 				.setName("reload-cmds")
@@ -17,11 +18,7 @@ export default {
 		),
 
 	async init(client, interaction) {
-		// get optionsku
-		// ...
-
-		// log input and output to a channel
-		// ...
+		// check if user is dev. if not errEmbed(..., null, ...)
 
 		// final int. reply with output
 		return interaction.reply({

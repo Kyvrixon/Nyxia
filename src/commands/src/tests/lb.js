@@ -1,3 +1,4 @@
+import Logger from "#utils/logger";
 import { createLeaderboard } from "#utils/functions.js";
 
 export default async (client, interaction) => {
@@ -5,7 +6,7 @@ export default async (client, interaction) => {
 		const b = [1, 2, 3];
 		await createLeaderboard("Emoji list", b, interaction, 5, null);
 	} catch (e) {
-		console.log(e);
+		Logger.error("/tests lb", "Failed to run command: " + e.message, e);
 	}
 };
 

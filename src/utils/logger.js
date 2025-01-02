@@ -1,15 +1,18 @@
-import "colors";
+/* eslint-disable no-console */
+import chalk from "chalk";
 
 const Logger = {
 	/**
 	 * Log a success message.
 	 *
-	 * @param {String} title - Title of the log
-	 * @param {String} message - Message to log
+	 * @param {string} title - Title of the log
+	 * @param {string} message - Message to log
 	 */
-	success: async (title, message) => {
+	success: (title, message) => {
 		console.log(
-			`[${title}]`.bold.cyan + " -> ".grey + `${message}`.bold.green
+			chalk.bold.cyan(`[${title}]`) +
+				chalk.grey(" > ") +
+				chalk.bold.green(message)
 		);
 		return;
 	},
@@ -17,12 +20,14 @@ const Logger = {
 	/**
 	 * Log a warning message.
 	 *
-	 * @param {String} title - Title of the log
-	 * @param {String} message - Message to log
+	 * @param {string} title - Title of the log
+	 * @param {string} message - Message to log
 	 */
-	warn: async (title, message) => {
+	warn: (title, message) => {
 		console.warn(
-			`[${title}]`.bold.yellow + " -> ".grey + `${message}`.bold.yellow
+			chalk.bold.yellow(`[${title}]`) +
+				chalk.grey(" > ") +
+				chalk.bold.yellow(message)
 		);
 		return;
 	},
@@ -30,12 +35,14 @@ const Logger = {
 	/**
 	 * Log an info message.
 	 *
-	 * @param {String} title - Title of the log
-	 * @param {String} message - Message to log
+	 * @param {string} title - Title of the log
+	 * @param {string} message - Message to log
 	 */
-	info: async (title, message) => {
+	info: (title, message) => {
 		console.log(
-			`[${title}]`.bold.blue + " -> ".grey + `${message}`.bold.white
+			chalk.bold.blue(`[${title}]`) +
+				chalk.grey(" > ") +
+				chalk.bold.white(message)
 		);
 		return;
 	},
@@ -43,21 +50,20 @@ const Logger = {
 	/**
 	 * Log a debug message if debug is enabled.
 	 *
-	 * @param {String} title - Title of the log
-	 * @param {String} message - Message to log
+	 * @param {string} title - Title of the log
+	 * @param {string} message - Message to log
 	 */
-	debug: async (title, message) => {
+	debug: (title, message) => {
 		if (
 			!process.env.debug ||
-			process.env.debug !== "yes" ||
-			process.env.debug !== "true"
+			(process.env.debug !== "yes" && process.env.debug !== "true")
 		) {
 			return;
 		}
 		console.log(
-			`[Debug - ${title}]`.bold.magenta +
-				" -> ".grey +
-				`${message}`.bold.magenta
+			chalk.bold.magenta(`[Debug - ${title}]`) +
+				chalk.grey(" > ") +
+				chalk.bold.magenta(message)
 		);
 		return;
 	},
@@ -65,23 +71,28 @@ const Logger = {
 	/**
 	 * Log an error message.
 	 *
-	 * @param {String} title - Title of the log
-	 * @param {String} message - Message to log
-	 * @param {Error} error - The error object to log
+	 * @param {string} title - Title of the log
+	 * @param {string} message - Message to log
+	 * @param {Error | null} error - The error object to log
 	 */
-	error: async (title, message, error) => {
+	error: (title, message, error) => {
+		// ill prob do somethin with the error anyway prob
+		// send to my api to log for later debugging idk
+
 		if (!error) {
 			console.error(
-				"[Logger]".bold.red +
-					" -> ".grey +
-					"No error object was provided".bold.red
+				chalk.bold.red("[Logger]") +
+					chalk.grey(" > ") +
+					chalk.bold.red("No error object was provided")
 			);
 			return Promise.reject("No error object provided");
 		} else if (!(error instanceof Error)) {
 			console.error(
-				"[Logger]".bold.red +
-					" -> ".grey +
-					"Provided error object is not an instance of Error".bold.red
+				chalk.bold.red("[Logger]") +
+					chalk.grey(" > ") +
+					chalk.bold.red(
+						"Provided error object is not an instance of Error"
+					)
 			);
 			return Promise.reject(
 				"Provided error object is not an instance of Error"
@@ -89,7 +100,9 @@ const Logger = {
 		}
 
 		console.error(
-			`[${title}]`.bold.red + " -> ".grey + `${message}`.bold.red
+			chalk.bold.red(`[${title}]`) +
+				chalk.grey(" > ") +
+				chalk.bold.red(message)
 		);
 		return;
 	},

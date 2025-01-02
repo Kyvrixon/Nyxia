@@ -17,8 +17,7 @@ export default async () => {
 		await mongoose.connect(process.env.DB_URL);
 		Logger.info("Database", "Connected!");
 	} catch (e) {
-		console.log(e);
-		Logger.error("Database", "Failed to connect", e);
+		Logger.error("Database", "Failed to connect: " + e.message, e);
 		process.exit(1);
 	}
 };

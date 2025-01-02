@@ -4,12 +4,13 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import Discord from "discord.js";
 import Logger from "#utils/logger.js";
-import "colors";
+import chalk from "chalk";
+const c = chalk;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export default async (client, sfx) => {
+export default async (client) => {
 	try {
 		client.commands = new Discord.Collection();
 
@@ -46,14 +47,13 @@ export default async (client, sfx) => {
 					throw new Error("Command is not set up correctly");
 				}
 			} catch (error) {
-				console.error(error);
 				const location = filePath
 					.replace(commandsPath, "")
 					.replace(/\\/g, " > ")
 					.replace(/^ > /, "");
 				Logger.warn(
 					"Cmd Loader",
-					`"${location}" isn't setup correctly`.red
+					`"${location}" isn't setup correctly: ` + error.message
 				);
 				errored++;
 			}
@@ -61,45 +61,38 @@ export default async (client, sfx) => {
 
 		Logger.info(
 			"Cmd Loader",
-			`Loaded ${count.toString().green} of ${commandFiles.length.toString().green} (${errored.toString().red} errored)`
+			`Loaded ${c.green(count.toString())}/${c.green(commandFiles.length.toString())} (${c.red(errored.toString())} errored)`
 		);
 
 		const rest = new REST({ version: "10" }).setToken(
 			process.env.BOT_TOKEN
 		);
 		try {
-			if (sfx !== true) {
-				if (!process.env.dev) {
-					await rest.put(
-						Routes.applicationCommands(process.env.BOT_ID),
-						{ body: commands }
-					);
-				} else if (process.env.dev) {
-					await rest.put(
-						Routes.applicationGuildCommands(
-							process.env.BOT_ID,
-							"1125196330646638592"
-						),
-						{ body: commands }
-					);
-				}
+			if (!process.env.dev) {
+				await rest.put(Routes.applicationCommands(process.env.BOT_ID), {
+					body: commands,
+				});
+			} else if (process.env.dev) {
+				await rest.put(
+					Routes.applicationGuildCommands(
+						process.env.BOT_ID,
+						"1125196330646638592"
+					),
+					{ body: commands }
+				);
 			}
+
 			return;
 		} catch (error) {
-			console.log(error);
-			Logger.error("Cmd Loader", "Failed to register", error);
-			if (sfx && sfx !== true) {
-				process.exit(1);
-			} else {
-				return false;
-			}
+			Logger.error(
+				"Cmd Loader",
+				"Failed to register: " + error.message,
+				error
+			);
+			process.exit(1);
 		}
 	} catch (error) {
 		Logger.error("Cmd Loader", error.message, error);
-		if (sfx && sfx !== true) {
-			process.exit(1);
-		} else {
-			return false;
-		}
+		process.exit(1);
 	}
 };

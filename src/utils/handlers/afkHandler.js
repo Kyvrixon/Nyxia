@@ -48,7 +48,7 @@ export const afkHandler = async (client, message) => {
 				setTimeout(async () => {
 					try {
 						await msg1.delete();
-					} catch {}
+					} catch {} // suppress errors
 				}, 15000);
 			}
 
@@ -94,9 +94,7 @@ export const afkHandler = async (client, message) => {
 						setTimeout(async () => {
 							try {
 								await msg2.delete();
-							} catch (error) {
-								console.error("Error deleting message:", error);
-							}
+							} catch {} // suppress errors
 						}, 15000);
 					}
 				}

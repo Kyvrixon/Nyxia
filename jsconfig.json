@@ -2,7 +2,6 @@
     "compilerOptions": {
       "baseUrl": ".",
       "paths": {
-        "#/*": ["*"],
         "#pkg": ["./package.json"],
         "#bot": ["src/bot.js"],
         "#assets/*": ["./src/assets/*"],

@@ -519,8 +519,8 @@ export const checkPermissions = async (
 /**
  * Checks if a colour is valid to use in embeds.
  *
- * @param {any} input
- * @returns
+ * @param {string} input
+ * @returns {boolean}
  */
 export const isValidColour = (input) => {
 	if (typeof input === "string") {
@@ -571,14 +571,14 @@ export const getEmoji = (name) => {
 export const getEmojiUrl = (name) => {
 	const emoji = client.emoji.filter((e) => e?.name === name)[0];
 
-	if (!emoji) {
+	if (!emoji || !emoji.id) {
 		return null;
 	}
 
 	if (emoji.animated) {
-		return `https://cdn.discordapp.com/emojis/${emoji?.id}.gif?quality=lossless&size=4096`;
+		return `https://cdn.discordapp.com/emojis/${emoji.id}.gif?quality=lossless&size=4096`;
 	} else {
-		return `https://cdn.discordapp.com/emojis/${emoji?.id}.png?quality=lossless&size=4096`;
+		return `https://cdn.discordapp.com/emojis/${emoji.id}.png?quality=lossless&size=4096`;
 	}
 };
 

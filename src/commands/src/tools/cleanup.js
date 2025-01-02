@@ -1,6 +1,7 @@
 import { basicEmbed, errEmbed } from "#utils/embeds.js";
 import { checkPermissions } from "#utils/functions.js";
 import { MessageFlags } from "discord.js";
+import Logger from "#utils/logger";
 
 export default async (client, interaction) => {
 	if (
@@ -61,8 +62,6 @@ export default async (client, interaction) => {
 			flags: MessageFlags.Ephemeral,
 		});
 	}
-
-	console.log(amount);
 
 	await interaction.reply({
 		embeds: [
@@ -135,12 +134,14 @@ export default async (client, interaction) => {
 		setTimeout(async () => {
 			try {
 				await confirmationMsg.delete();
-			} catch (err) {
-				console.error("Failed to delete confirmation message:", err);
-			}
+			} catch {} // suppress errors
 		}, 5000);
 	} catch (err) {
-		console.error("Error clearing messages:", err);
+		Logger.error(
+			"/tools cleanup",
+			"Failed to run command: " + err.message,
+			err
+		);
 		await interaction.followUp({
 			embeds: [
 				errEmbed(

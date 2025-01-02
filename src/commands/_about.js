@@ -11,15 +11,25 @@ export default {
 		.setDescription("❓Learn about me!"),
 
 	async init(client, interaction) {
+		// format desc
+		const desc = "";
+		const arrayFields = [
+			{
+				name: "",
+				value: "",
+				inline: true,
+			},
+		];
+
 		return interaction.reply({
 			embeds: [
 				basicEmbed(
-					"AFK Set!",
-					"> Your AFK has been successfully set, enjoy your break!",
+					"About me!",
+					desc,
+					arrayFields,
+					"#f3b3c3",
 					null,
-					"Green",
 					null,
-					"Just a reminder your AFK affects ALL servers you share with me!",
 					null,
 					null,
 					null

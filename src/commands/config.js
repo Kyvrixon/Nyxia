@@ -1,6 +1,7 @@
 import { SlashCommandBuilder, ChannelType } from "discord.js";
 import { handleCmd } from "#utils/functions.js";
 import { errEmbed } from "#utils/embeds.js";
+import Logger from "../utils/logger";
 
 export default {
 	dev: false,
@@ -54,7 +55,7 @@ export default {
 			await handleCmd(client, interaction);
 			return;
 		} catch (e) {
-			console.log(e);
+			Logger.error("/config", "Failed to run command: " + e.message, e);
 			return interaction.reply({
 				embeds: [
 					errEmbed(

@@ -3,11 +3,36 @@ import { permissions } from "#utils/general.js";
 import { errEmbed } from "#utils/embeds.js";
 import { footer } from "#utils/functions.js";
 
-function convertCamelCaseToWords(text) {
-	return text.replace(/([A-Z])/g, " $1").replace(/^./, (str) => {
-		return str.toUpperCase().trim();
-	});
-}
+const permissionNames = {
+	AddReactions: "Add reactions",
+	AttachFiles: "Attach files",
+	BanMembers: "Ban members",
+	ChangeNickname: "Change nickname",
+	Connect: "Connect to vc's",
+	CreateGuildExpressions: "Create server emojis",
+	CreateInstantInvite: "Make an invite",
+	CreatePrivateThreads: "Create private threads",
+	CreatePublicThreads: "Create public threads",
+	DeafenMembers: "Deafen members",
+	EmbedLinks: "Embed links",
+	KickMembers: "Kick members",
+	ManageChannels: "Manage channels",
+	ManageGuild: "Manage server",
+	ManageGuildExpressions: "Manage server emojis",
+	ManageMessages: "Manage messages",
+	ManageNicknames: "Manage nicknames",
+	ManageRoles: "Manage roles",
+	ManageThreads: "Manage threads",
+	ManageWebhooks: "Manage webhooks",
+	ModerateMembers: "Timeout members",
+	MoveMembers: "Move ppl in vc",
+	MuteMembers: "Mute ppl in vc",
+	ReadMessageHistory: "Read past messages",
+	SendMessages: "Send messages",
+	SendMessagesInThreads: "Send messages",
+	Speak: "Speak in vc",
+	ViewChannel: "View channel",
+};
 
 export default async (client, interaction) => {
 	try {
@@ -22,12 +47,14 @@ export default async (client, interaction) => {
 				const hasPermission = clientMember
 					.permissionsIn(interaction.channel.id)
 					.has(permission);
-				const permissionName = convertCamelCaseToWords(
-					permission.replace(/_/g, " ")
-				);
+				const permissionName =
+					permissionNames[permission] || permission;
 
 				return `\`${hasPermission ? "✅" : "❌"} ${permissionName}\``;
 			});
+
+		// bc yes
+		permissionsText.push("`✅ Being absolutely awesome`");
 
 		const embed = new EmbedBuilder()
 			.setColor("DarkButNotBlack")
@@ -60,7 +87,7 @@ export default async (client, interaction) => {
 		}
 
 		return interaction.reply({
-			flags: MessageFlags.FLAGS.EPHEMERAL,
+			flags: MessageFlags.Ephemeral,
 			embeds: [embed],
 		});
 	} catch (err) {
