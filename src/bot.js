@@ -4,15 +4,13 @@ import { Client, GatewayIntentBits, Partials } from "discord.js";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import Logger from "#utils/logger.js";
-import model from "#models/user.js";
+import Logger from "#utils/logger.ts";
+import userModel from "#models/user.js";
 
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-export const intCache = new Map();
 
 export const client = new Client({
 	partials: [Partials.Channel, Partials.Message],
@@ -27,6 +25,7 @@ export const client = new Client({
 });
 
 async function loadModules() {
+	/*
 	async function getAllFiles(dirPath, arrayOfFiles) {
 		const files = fs.readdirSync(dirPath);
 		arrayOfFiles = arrayOfFiles || [];
@@ -57,29 +56,40 @@ async function loadModules() {
 			await delay(100);
 		}
 	}
+*/
+	const antiCrash = await import("#modules/antiCrash.js");
+	await antiCrash.default(client);
+
+	const commands = await import("#modules/commands.js");
+	await commands.default(client);
+
+	const events = await import("#modules/events.js");
+	await events.default(client);
+
+	const uploadEmojis = await import("#modules/uploadEmojis.js");
+	await uploadEmojis.default(client);
 }
 
 async function start() {
 	console.clear();
 	Logger.info("Init", "Starting...");
 
-	const startTime = Date.now();
-	const packageJson = JSON.parse(
+	const startTime = new Date(Date.now());
+	client.package = JSON.parse(
 		fs.readFileSync(path.join(__dirname, "../package.json"), "utf-8")
 	);
-	client.package = packageJson;
 	const databaseModule = await import(
 		`file://${path.join(__dirname, "modules", "database.js")}`
 	);
 	await databaseModule.default();
 	await loadModules();
-	const data = await model
+	const data = await userModel
 		.findOne({
 			user: "981755777754755122",
 		})
 		.exec();
 	if (!data) {
-		const newSave = new model({
+		const newSave = new userModel({
 			user: "981755777754755122",
 			flags: {
 				common: ["dev"],
@@ -90,7 +100,7 @@ async function start() {
 
 	await client.login(process.env.BOT_TOKEN);
 
-	const endTime = Date.now();
+	const endTime = new Date(Date.now());
 	Logger.info(
 		"Init",
 		"Completed in " + `${parseInt((endTime - startTime) / 1000)}s`.green

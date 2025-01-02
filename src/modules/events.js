@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
 import { fileURLToPath, pathToFileURL } from "url";
-import Logger from "#utils/logger.js";
+import Logger from "#utils/logger.ts";
 import "colors";
 
 const __filename = fileURLToPath(import.meta.url);

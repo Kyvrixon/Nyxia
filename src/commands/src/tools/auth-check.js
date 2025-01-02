@@ -2,7 +2,7 @@ import { EmbedBuilder } from "discord.js";
 import { footer } from "#utils/functions.js";
 import { errEmbed } from "#utils/embeds.js";
 import model from "#models/user.js";
-import Logger from "#utils/logger.js";
+import Logger from "#utils/logger.ts";
 
 export default async (client, interaction) => {
 	const target = interaction.options.getUser("user");

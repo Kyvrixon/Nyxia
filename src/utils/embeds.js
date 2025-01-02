@@ -17,7 +17,7 @@ import {
 } from "discord.js";
 import { client } from "#bot";
 import { footer, getInvite, isValidColour } from "./functions.js";
-import Logger from "./logger.js";
+import Logger from "./logger.ts";
 
 /**
  * Creates an error embed message.
@@ -25,6 +25,7 @@ import Logger from "./logger.js";
  * @param {string} message - The message content of the embed.
  * @param {Error} error - The error object. Is allowed to be null.
  * @param {object} source - The source object that triggered for example interaction or message.
+ * @param {string} title - Title. Default "Oops.. something went wrong".
  * @returns {import('discord.js').EmbedBuilder} EmbedBuiler instance.
  */
 export const errEmbed = (
@@ -46,17 +47,14 @@ export const errEmbed = (
 		.setColor(e ? "Red" : "Orange")
 		.setTitle(title)
 		.setDescription(`> ${message}`)
-		.setFooter(footer());
+		.setFooter(footer(`❓ Error ID: ${code}`));
 
 	if (e && s) {
-		embedReply
-			.setDescription(`\`\`\`\n${message}\`\`\``)
-			.setAuthor({ name: `Error ID: ${code}` })
-			.addFields({
-				name: "__Error Help__",
-				value: "> If the error affects functionality, join our support server, open a ticket, and share the **Error ID**. A dev may join to investigate, please grant necessary permissions they request. Use `/auth-check` to verify their identity first.",
-				inline: false,
-			});
+		embedReply.setDescription(message).addFields({
+			name: "__Error Help__",
+			value: "> If the error affects functionality, join our support server, open a ticket, and share the **Error ID**. A dev may join to investigate, please grant necessary permissions they request. Use `/auth-check` to verify their identity first.",
+			inline: false,
+		});
 	}
 
 	sendLog(e, s);

@@ -18,7 +18,7 @@ export default {
 	async init(client, interaction) {
 		await AFK.set(
 			interaction.user,
-			Date.now(),
+			new Date(Date.now()),
 			interaction.options.getString("message") || "None given."
 		);
 

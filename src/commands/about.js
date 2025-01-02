@@ -14,12 +14,12 @@ export default {
 		return interaction.reply({
 			embeds: [
 				basicEmbed(
-					"AFK Set!",
-					"> Your AFK has been successfully set, enjoy your break!",
 					null,
-					"Green",
+					"sDUIFgsifgEIFGoegfOUEWGFOUwgef",
 					null,
-					"Just a reminder your AFK affects ALL servers you share with me!",
+					"Yellow",
+					null,
+					null,
 					null,
 					null,
 					null
