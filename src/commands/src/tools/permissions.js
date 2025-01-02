@@ -1,5 +1,5 @@
 import { EmbedBuilder, PermissionsBitField } from "discord.js";
-import { permissions } from "#utils/config.js";
+import { permissions } from "#utils/general.js";
 import { errEmbed } from "#utils/embeds.js";
 import { footer } from "#utils/functions.js";
 

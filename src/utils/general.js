@@ -34,10 +34,10 @@ export const permissions = [
 	PermissionFlagsBits.Speak,
 	PermissionFlagsBits.UseEmbeddedActivities,
 	PermissionFlagsBits.UseExternalEmojis,
-	PermissionFlagsBits.UseExternalStickers,
 	PermissionFlagsBits.ViewAuditLog,
 	PermissionFlagsBits.ViewChannel,
 ];
+
 
 export const userFlagValues = ["dev", "mod", "staff", "valued", "premium"];
 
