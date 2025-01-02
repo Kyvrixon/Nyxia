@@ -15,7 +15,6 @@
       "moduleResolution": "node",
       "module": "ESNext",
       "target": "ESNext",
-      "checkJs": true
     },
     "include": [
       "src/**/*",
