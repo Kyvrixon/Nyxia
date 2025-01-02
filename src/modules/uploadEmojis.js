@@ -1,5 +1,5 @@
 import { emojisList } from "#utils/general.js";
-import Logger from "#utils/logger.ts";
+import Logger from "#utils/logger.js";
 
 export default async (client) => {
 	Logger.info("Emoji Uploader", "Began uploading emojis...");

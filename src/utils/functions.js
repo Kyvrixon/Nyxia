@@ -4,7 +4,7 @@ import Discord, { PermissionFlagsBits } from "discord.js";
 import "colors";
 import fs from "node:fs";
 import user from "#models/user.js";
-import Logger from "./logger.ts";
+import Logger from "./logger.js";
 import { client } from "#bot";
 import { errEmbed } from "./embeds.js";
 
@@ -311,7 +311,7 @@ export const createLeaderboard = async (
  */
 export const footer = (text, pic) => {
 	return {
-		text: `${text || ""}\n© Kyvrixon™ 2025 | v${packageJson.version}`,
+		text: `${text || ""}© Kyvrixon™ 2025 | v${packageJson.version}`,
 		iconURL: pic || null,
 	};
 };
@@ -320,7 +320,7 @@ export const footer = (text, pic) => {
  * Check if a user is a developer
  *
  * @param {string} input - User ID
- * @returns {Promise<boolean | "none">} Retuns true or false or "none"
+ * @returns {boolean | "none"} Retuns true or false or "none"
  */
 export const devCheck = async (input) => {
 	const userId =
@@ -589,27 +589,7 @@ export const convertToUnix = (date) => {
 	return Math.floor(date / 1000);
 };
 
-/**
- * Get the full path of a command.
- *
- * @param {import("discord.js").BaseCommandInteraction} source
- * @returns {string} - e.g. "/config confess set"
- */
-export const getCmdPath = (source) => {
-	let group = null;
-	let sub = null;
-
-	group = source.options.getSubcommandGroup() || null;
-	sub = source.options.getSubcommand() || null;
-
-	const commandInfo = {
-		subcommandGroup: group,
-		subcommand: sub,
-	};
-	return `/${source.commandName} ${commandInfo.subcommandGroup ? `${commandInfo.subcommandGroup} ` : ""}${commandInfo.subcommand || ""}`;
-};
-
-//================================================
+//===================
 export default {
 	handleCmd,
 	createLeaderboard,
@@ -622,5 +602,4 @@ export default {
 	getEmoji,
 	getEmojiUrl,
 	convertToUnix,
-	getCmdPath,
 };

@@ -1,4 +1,4 @@
-import Logger from "#utils/logger.ts";
+import Logger from "#utils/logger.js";
 import "colors";
 
 export default {

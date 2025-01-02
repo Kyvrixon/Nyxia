@@ -1,16 +1,15 @@
-import { REST, Routes, Client } from "discord.js";
+import { REST, Routes } from "discord.js";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import Discord from "discord.js";
-import Logger from "#utils/logger.ts";
+import Logger from "#utils/logger.js";
 import "colors";
-import "node:process";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export default async (client: Client, sfx: Boolean) => {
+export default async (client, sfx) => {
 	try {
 		client.commands = new Discord.Collection();
 
@@ -18,7 +17,7 @@ export default async (client: Client, sfx: Boolean) => {
 		let errored = 0;
 		const commands = [];
 		const commandsPath = path.join(__dirname, "..", "commands");
-		const readCommandFiles = (dirPath: string) => {
+		const readCommandFiles = (dirPath) => {
 			return fs
 				.readdirSync(dirPath)
 				.filter((file) => {
@@ -37,14 +36,7 @@ export default async (client: Client, sfx: Boolean) => {
 
 		for (const filePath of commandFiles) {
 			try {
-				let fp = "";
-				if (sfx) {
-					const path = filePath + `?update=${new Date(Date.now())}`;
-					fp = new URL(path, import.meta.url).href;
-				} else {
-					fp = filePath;
-				}
-				const commandModule = await import("file://" + fp);
+				const commandModule = await import("file://" + filePath);
 				const command = commandModule.default;
 				if (command.data && command.init) {
 					await client.commands.set(command.data.name, command);
@@ -67,33 +59,31 @@ export default async (client: Client, sfx: Boolean) => {
 			}
 		}
 
-		if (sfx) {
-			return true;
-		}
-
 		Logger.info(
 			"Cmd Loader",
 			`Loaded ${count.toString().green} of ${commandFiles.length.toString().green} (${errored.toString().red} errored)`
 		);
 
 		const rest = new REST({ version: "10" }).setToken(
-			process.env.BOT_TOKEN as string
+			process.env.BOT_TOKEN
 		);
 		try {
-			if (!process.env.dev) {
-				await rest.put(Routes.applicationCommands(process.env.BOT_ID as string), {
-					body: commands,
-				});
-				return;
+			if (sfx !== true) {
+				if (!process.env.dev) {
+					await rest.put(
+						Routes.applicationCommands(process.env.BOT_ID),
+						{ body: commands }
+					);
+				} else if (process.env.dev) {
+					await rest.put(
+						Routes.applicationGuildCommands(
+							process.env.BOT_ID,
+							"1125196330646638592"
+						),
+						{ body: commands }
+					);
+				}
 			}
-
-			await rest.put(
-				Routes.applicationGuildCommands(
-					process.env.BOT_ID as string,
-					"1125196330646638592"
-				),
-				{ body: commands }
-			);
 			return;
 		} catch (error) {
 			console.log(error);
