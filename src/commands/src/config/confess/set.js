@@ -1,6 +1,7 @@
 import { errEmbed } from "#utils/embeds.js";
 import guildModel from "#models/guild.js";
 import { checkPermissions } from "#utils/functions.js";
+import { MessageFlags } from "discord.js";
 
 export default async (client, interaction) => {
 	if (
@@ -21,7 +22,7 @@ export default async (client, interaction) => {
 					"No permission"
 				),
 			],
-			ephemeral: true,
+			flags: MessageFlags.Ephemeral,
 		});
 	}
 

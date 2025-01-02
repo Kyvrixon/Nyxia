@@ -1,4 +1,4 @@
-import { EmbedBuilder, PermissionsBitField } from "discord.js";
+import { EmbedBuilder, PermissionsBitField, MessageFlags } from "discord.js";
 import { permissions } from "#utils/general.js";
 import { errEmbed } from "#utils/embeds.js";
 import { footer } from "#utils/functions.js";
@@ -12,10 +12,8 @@ function convertCamelCaseToWords(text) {
 export default async (client, interaction) => {
 	try {
 		const clientMember =
-			(await interaction.guild.members.cache.get(
-				"1309736362454421505"
-			)) ||
-			(await interaction.guild.members.fetch("1309736362454421505"));
+			(await interaction.guild.members.cache.get(process.env.BOT_ID)) ||
+			(await interaction.guild.members.fetch(process.env.BOT_ID));
 		const requiredPermissions = new PermissionsBitField(permissions);
 
 		const permissionsText = requiredPermissions
@@ -35,7 +33,7 @@ export default async (client, interaction) => {
 			.setColor("DarkButNotBlack")
 			.setTitle("Required Permissions")
 			.setDescription(
-				"> To ensure proper functionality, please verify that I have the necessary permissions listed below. Note that running this command in a different channel might produce varying results due to specific channel permissions."
+				"> To ensure proper functionality, please verify that I have the necessary permissions listed below. Note that running this command in a different channel might produce varying results due to specific channel permissions, so if you are having problems then try running this in the channel!"
 			)
 			.setFooter(footer());
 
@@ -61,7 +59,10 @@ export default async (client, interaction) => {
 			return chunks;
 		}
 
-		return interaction.reply({ ephemeral: false, embeds: [embed] });
+		return interaction.reply({
+			flags: MessageFlags.FLAGS.EPHEMERAL,
+			embeds: [embed],
+		});
 	} catch (err) {
 		interaction.reply({
 			content: null,

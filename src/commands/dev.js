@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder, MessageFlags } from "discord.js";
 import { basicEmbed } from "#utils/embeds.js";
 
 export default {
@@ -26,7 +26,7 @@ export default {
 		// final int. reply with output
 		return interaction.reply({
 			embeds: [basicEmbed()],
-			ephemeral: true,
+			flags: MessageFlags.Ephemeral,
 		});
 	},
 };

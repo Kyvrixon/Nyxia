@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder, MessageFlags } from "discord.js";
 import { basicEmbed } from "#utils/embeds.js";
 
 export default {
@@ -25,7 +25,7 @@ export default {
 					null
 				),
 			],
-			ephemeral: true,
+			flags: MessageFlags.Ephemeral,
 		});
 	},
 };

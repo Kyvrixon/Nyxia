@@ -1,6 +1,6 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import Discord, { PermissionFlagsBits } from "discord.js";
+import Discord, { PermissionFlagsBits, MessageFlags } from "discord.js";
 import "colors";
 import fs from "node:fs";
 import user from "#models/user.js";
@@ -207,7 +207,7 @@ export const createLeaderboard = async (
 					) {
 						await modalSubmit.reply({
 							content: "Invalid page number.",
-							ephemeral: true,
+							flags: MessageFlags.Ephemeral,
 						});
 					} else {
 						currentIndex = (pageNumber - 1) * pageCount;
@@ -279,7 +279,10 @@ export const createLeaderboard = async (
 				collector.resetTimer();
 			}
 		} else {
-			await btn.reply({ content: "This isn't for you", ephemeral: true });
+			await btn.reply({
+				content: "This isn't for you",
+				flags: MessageFlags.Ephemeral,
+			});
 			collector.resetTimer();
 		}
 	});

@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder, MessageFlags } from "discord.js";
 import { basicEmbed } from "#utils/embeds.js";
 import AFK from "#utils/afk.js";
 
@@ -36,7 +36,7 @@ export default {
 					null
 				),
 			],
-			ephemeral: true,
+			flags: MessageFlags.Ephemeral,
 		});
 	},
 };

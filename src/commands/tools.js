@@ -23,6 +23,10 @@ export default {
 				)
 		)
 
+		.addSubcommand((x) =>
+			x.setName("permissions").setDescription("🧰 Check my permissions!")
+		)
+
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName("list-cmds")

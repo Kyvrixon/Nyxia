@@ -38,7 +38,6 @@ export const permissions = [
 	PermissionFlagsBits.ViewChannel,
 ];
 
-
 export const userFlagValues = ["dev", "mod", "staff", "valued", "premium"];
 
 // These get uploaded. Use client.emoji[name] to reference

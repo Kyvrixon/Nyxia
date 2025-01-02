@@ -1,5 +1,6 @@
 import { basicEmbed, errEmbed } from "#utils/embeds.js";
 import { checkPermissions } from "#utils/functions.js";
+import { MessageFlags } from "discord.js";
 
 export default async (client, interaction) => {
 	if (
@@ -20,7 +21,7 @@ export default async (client, interaction) => {
 					"No permission"
 				),
 			],
-			ephemeral: true,
+			flags: MessageFlags.Ephemeral,
 		});
 	}
 
@@ -41,7 +42,7 @@ export default async (client, interaction) => {
 					"Invalid input"
 				),
 			],
-			ephemeral: true,
+			flags: MessageFlags.Ephemeral,
 		});
 	}
 
@@ -57,7 +58,7 @@ export default async (client, interaction) => {
 					"Invalid input"
 				),
 			],
-			ephemeral: true,
+			flags: MessageFlags.Ephemeral,
 		});
 	}
 
@@ -149,7 +150,7 @@ export default async (client, interaction) => {
 					"Error"
 				),
 			],
-			ephemeral: true,
+			flags: MessageFlags.Ephemeral,
 		});
 	}
 };

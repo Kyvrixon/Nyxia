@@ -1,4 +1,4 @@
-import { EmbedBuilder } from "discord.js";
+import { EmbedBuilder, MessageFlags } from "discord.js";
 import { footer } from "#utils/functions.js";
 import { errEmbed } from "#utils/embeds.js";
 import model from "#models/user.js";
@@ -22,7 +22,7 @@ export default async (client, interaction) => {
 						"> Hey thats me! I am the one who has the highest authority of myself, least I hope so..."
 					),
 			],
-			ephemeral: true,
+			flags: MessageFlags.Ephemeral,
 			content: null,
 		});
 	}
@@ -36,7 +36,7 @@ export default async (client, interaction) => {
 					.setColor("DarkButNotBlack")
 					.setDescription("> Why are you checking bots? Curiosity?"),
 			],
-			ephemeral: true,
+			flags: MessageFlags.Ephemeral,
 			content: null,
 		});
 	}
@@ -59,7 +59,7 @@ export default async (client, interaction) => {
 								">, **does not** have high authority of me!\n\nIf this user is pretending to have authorship over me, I urge you to report this user via `/report`!"
 						),
 				],
-				ephemeral: true,
+				flags: MessageFlags.Ephemeral,
 				content: null,
 			});
 		} else {
@@ -77,7 +77,7 @@ export default async (client, interaction) => {
 								"> has authority to request stuff related to me such as investigating an error, report and more!"
 						),
 				],
-				ephemeral: true,
+				flags: MessageFlags.Ephemeral,
 				content: null,
 			});
 		}
