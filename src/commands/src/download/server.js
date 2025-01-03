@@ -36,7 +36,7 @@ export default async (client, interaction) => {
 		});
 	}
 
-	await interaction.deferReply({ fetchReply: true });
+	await interaction.deferReply({ withResponse: true });
 	await interaction.editReply(
 		"Fetching data please wait...\n-# Please keep an eye on this message!"
 	);

@@ -1,7 +1,7 @@
 import { basicEmbed, errEmbed } from "#utils/embeds.js";
 import { checkPermissions } from "#utils/functions.js";
 import { MessageFlags } from "discord.js";
-import Logger from "#utils/logger";
+import Logger from "#utils/logger.js";
 
 export default async (client, interaction) => {
 	if (

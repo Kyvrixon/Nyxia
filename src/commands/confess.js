@@ -16,6 +16,7 @@ export default {
 		.addSubcommand((x) =>
 			x.setName("send").setDescription("🤫 Send a confession")
 		),
+
 	async init(client, interaction) {
 		try {
 			await handleCmd(client, interaction);

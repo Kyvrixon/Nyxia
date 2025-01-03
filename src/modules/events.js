@@ -2,7 +2,7 @@ import path from "path";
 import fs from "fs";
 import { fileURLToPath, pathToFileURL } from "url";
 import Logger from "#utils/logger.js";
-import "colors";
+import chalk from "chalk";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -42,7 +42,7 @@ export default async (client) => {
 						.replace(/^ > /, "");
 					Logger.warn(
 						"Event Loader",
-						`"${location}" isn't setup correctly`.red
+						chalk.red(`"${location}" isn't setup correctly`)
 					);
 					errored++;
 					continue;
@@ -66,7 +66,7 @@ export default async (client) => {
 
 		Logger.info(
 			"Event Loader",
-			`Loaded ${count.toString().green} of ${eventFiles.length.toString().green} (${errored.toString().red} errored)`
+			`Loaded ${chalk.green(count.toString())}/${chalk.green(eventFiles.length.toString())} (${chalk.red(errored.toString())} errored)`
 		);
 	} catch (e) {
 		Logger.error(

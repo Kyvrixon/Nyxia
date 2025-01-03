@@ -67,7 +67,6 @@ export const handleCmd = async (
  * @param {number} [pageCount=10] - (optional) Number of items to display per page.
  * @param {Discord.ActionRowBuilder} extra_components - (optional) Extra components to add to
  * @param {string} footerText - (optional) text to add on the footer
- * @returns {nothing} Does not return anything
  */
 export const createLeaderboard = async (
 	title,
@@ -106,7 +105,7 @@ export const createLeaderboard = async (
 	const isMessage = interaction instanceof Discord.Message;
 	const replyOptions = {
 		embeds: [await generateEmbed(0, lb, title)],
-		fetchReply: true,
+		withResponse: true,
 	};
 
 	const createButton = (id, label, disabled = false) =>
@@ -366,7 +365,6 @@ export const getInvite = async (guild, channel) => {
 		let invites = [];
 
 		try {
-			// Attempt to fetch existing invites
 			invites = await guild.invites.fetch();
 		} catch (fetchError) {
 			Logger.error(
@@ -376,20 +374,15 @@ export const getInvite = async (guild, channel) => {
 			);
 		}
 
-		// If there are existing invites, find one that meets criteria
-		if (invites.length > 0) {
-			invite = invites.find(
-				(invite) =>
-					invite.inviter &&
-					invite.inviter.id === client.user.id &&
-					!invite.expiresAt
-			);
-			if (!invite) {
-				invite = invites.find((invite) => !invite.expiresAt); // Fallback: find any invite that doesn't expire
-			}
+		if (invites.size > 0) {
+			invite =
+				invites.find(
+					(invite) =>
+						invite.inviter?.id === client.user.id &&
+						!invite.expiresAt
+				) || invites.find((invite) => !invite.expiresAt);
 		}
 
-		// If no invite found and a channel is provided, create a new invite for that channel
 		if (!invite && channel) {
 			try {
 				invite = await guild.invites.create(channel.id, { maxAge: 0 });
@@ -402,10 +395,9 @@ export const getInvite = async (guild, channel) => {
 			}
 		}
 
-		// If still no invite, create one for any valid channel in the guild
 		if (!invite && !channel) {
 			const targetChannel =
-				guild.systemChannel || // System channel (if set)
+				guild.systemChannel ||
 				guild.channels.cache.find(
 					(ch) =>
 						ch.isTextBased() &&
@@ -432,7 +424,6 @@ export const getInvite = async (guild, channel) => {
 			}
 		}
 
-		// Return the invite URL or null if no invite could be created
 		return invite ? invite.url : null;
 	} catch (error) {
 		Logger.error(
@@ -463,6 +454,7 @@ export const delay = async (time) => {
  * @param {any} source Message or Interaction
  * @param {String} type "both", "user" or "bot"
  * @param {String} target "self" or "channel"
+ * @param {String} [channelId] Optional channel ID to check permissions in
  * @returns {Promise<Boolean>} Boolean promise
  */
 export const checkPermissions = async (
@@ -470,15 +462,24 @@ export const checkPermissions = async (
 	userPermissions,
 	source,
 	type = "both",
-	target = "channel"
+	target = "channel",
+	channelId
 ) => {
-	const channel = source.channel;
+	const guild = source.guild;
+	const channel = channelId
+		? guild.channels.cache.get(channelId) ||
+			(await guild.channels.fetch(channelId))
+		: source.channel;
+
+	if (!channel) {
+		throw new Error("Channel not found");
+	}
 
 	const checkPermissionFor = (permission, memberId, isSelf) => {
 		const member = isSelf
-			? source.guild.members.cache.get(memberId)
+			? guild.members.cache.get(memberId)
 			: channel.guild.members.cache.get(memberId);
-		return member?.permissions.has(permission);
+		return member?.permissionsIn(channel).has(permission);
 	};
 
 	const checkAllPermissions = (permissionsArray, memberId, isSelf) => {
@@ -490,7 +491,7 @@ export const checkPermissions = async (
 	if (type === "both") {
 		const botHasPermissions = await checkAllPermissions(
 			botPermissions,
-			source.guild.members.me.id,
+			guild.members.me.id,
 			target === "self"
 		);
 		const userHasPermissions = await checkAllPermissions(
@@ -508,7 +509,7 @@ export const checkPermissions = async (
 	} else if (type === "bot") {
 		return await checkAllPermissions(
 			botPermissions,
-			source.guild.members.me.id,
+			guild.members.me.id,
 			target === "self"
 		);
 	}
@@ -592,6 +593,23 @@ export const convertToUnix = (date) => {
 	return Math.floor(date / 1000);
 };
 
+/**
+ * Generate a random generated ID.
+ *
+ * @param {number} length
+ * @returns {string}
+ */
+export const generateId = (length) => {
+	const characters =
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	let result = "";
+	for (let i = 0; i < length; i++) {
+		const randomIndex = Math.floor(Math.random() * characters.length);
+		result += characters[randomIndex];
+	}
+	return result;
+};
+
 //===================
 export default {
 	handleCmd,
@@ -605,4 +623,5 @@ export default {
 	getEmoji,
 	getEmojiUrl,
 	convertToUnix,
+	generateId,
 };

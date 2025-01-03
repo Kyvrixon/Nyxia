@@ -1,7 +1,7 @@
 import { SlashCommandBuilder, ChannelType } from "discord.js";
 import { handleCmd } from "#utils/functions.js";
 import { errEmbed } from "#utils/embeds.js";
-import Logger from "../utils/logger";
+import Logger from "../utils/logger.js";
 
 export default {
 	dev: false,
@@ -35,8 +35,11 @@ export default {
 								.setName("type")
 								.setDescription("What type?")
 								.addChoices(
-									{ name: "Target Channel", value: "target" },
-									{ name: "Log Channel", value: "logs" }
+									{
+										name: "Where confessions send to",
+										value: "main",
+									},
+									{ name: "The log channel", value: "logs" }
 								)
 								.setRequired(true)
 						)
@@ -47,6 +50,14 @@ export default {
 								.setDescription("Channel")
 								.addChannelTypes(ChannelType.GuildText)
 								.setRequired(true)
+						)
+
+						.addBooleanOption((x) =>
+							x
+								.setName("logs-enabled")
+								.setDescription(
+									"Enable the logs? (must pass a log channel option first)"
+								)
 						)
 				)
 		),

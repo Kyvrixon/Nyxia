@@ -16,7 +16,7 @@ import {
 	UserSelectMenuInteraction,
 } from "discord.js";
 import { client } from "#bot";
-import { footer, getInvite, isValidColour } from "./functions.js";
+import { footer, getInvite } from "./functions.js";
 import Logger from "./logger.js";
 
 /**
@@ -201,14 +201,47 @@ export const basicEmbed = (
 	timestamp,
 	thumbnail,
 	image
-) =>
-	new EmbedBuilder()
-		.setAuthor(author || null)
-		.setTitle(title || null)
-		.setDescription(description || " ")
-		.setFooter(footer(footerText))
-		.addFields(Array.isArray(fields) ? fields : [])
-		.setColor(isValidColour(colour) ? colour : "DarkButNotBlack")
-		.setTimestamp(timestamp)
-		.setThumbnail(thumbnail || null)
-		.setImage(image || null);
+) => {
+	try {
+		const embed = new EmbedBuilder();
+
+		if (author) {
+			embed.setAuthor(author);
+		}
+		if (title) {
+			embed.setTitle(title);
+		}
+		if (description) {
+			embed.setDescription(description);
+		} else {
+			embed.setDescription(" ");
+		}
+		if (footerText) {
+			embed.setFooter(footer(footerText));
+		}
+		if (fields && fields.length > 0) {
+			embed.addFields(fields);
+		}
+		if (colour) {
+			embed.setColor(colour);
+		} else {
+			embed.setColor("DarkButNotBlack");
+		}
+		if (timestamp) {
+			embed.setTimestamp(timestamp);
+		}
+		if (thumbnail) {
+			embed.setThumbnail(thumbnail);
+		}
+		if (image) {
+			embed.setImage(image);
+		}
+	} catch (e) {
+		Logger.error(
+			"function basicEmbed",
+			"Something went wrong: " + e.message,
+			e
+		);
+		return null;
+	}
+};

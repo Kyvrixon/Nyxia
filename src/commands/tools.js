@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "discord.js";
 import { handleCmd } from "#utils/functions.js";
 import { errEmbed } from "#utils/embeds.js";
-import Logger from "#utils/logger";
+import Logger from "#utils/logger.js";
 
 export default {
 	dev: false,

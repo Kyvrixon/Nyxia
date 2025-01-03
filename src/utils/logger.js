@@ -79,31 +79,17 @@ const Logger = {
 		// ill prob do somethin with the error anyway prob
 		// send to my api to log for later debugging idk
 
-		if (!error) {
-			console.error(
-				chalk.bold.red("[Logger]") +
-					chalk.grey(" > ") +
-					chalk.bold.red("No error object was provided")
-			);
-			return Promise.reject("No error object provided");
-		} else if (!(error instanceof Error)) {
-			console.error(
-				chalk.bold.red("[Logger]") +
-					chalk.grey(" > ") +
-					chalk.bold.red(
-						"Provided error object is not an instance of Error"
-					)
-			);
-			return Promise.reject(
-				"Provided error object is not an instance of Error"
-			);
-		}
-
 		console.error(
 			chalk.bold.red(`[${title}]`) +
 				chalk.grey(" > ") +
 				chalk.bold.red(message)
 		);
+
+		if (error instanceof Error && error.stack) {
+			console.log(chalk.grey("[=========BEGIN=========]"));
+			console.error(chalk.bold.dim.red(error.stack));
+			console.log(chalk.grey("[=========END==========]"));
+		}
 		return;
 	},
 };
