@@ -1,5 +1,4 @@
 import Logger from "#utils/logger.js";
-import "colors";
 
 export default {
 	name: "ready",

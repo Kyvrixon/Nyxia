@@ -69,52 +69,20 @@ export default async (client, interaction) => {
 						.setCustomId("confession_msg")
 						.setLabel("What is your confession?")
 						.setStyle(TextInputStyle.Paragraph)
-						.setPlaceholder("You have 1 minute to type")
+						.setPlaceholder("You have 5 minutes to type")
 						.setRequired(true)
 				)
 			);
 
 		await interaction.showModal(modal);
 		const modalSubmit = await interaction
-			.awaitModalSubmit({ time: 60000 })
+			.awaitModalSubmit({ time: 5 * 60 * 1000 })
 			.catch(() => null);
 
 		if (modalSubmit) {
 			confessMessage =
 				modalSubmit.fields.getTextInputValue("confession_msg");
-			await modalSubmit.deferUpdate();
-		} else {
-			await interaction.deferUpdate();
-			return interaction.reply({
-				embeds: [
-					errEmbed(
-						"You took too long!",
-						null,
-						interaction,
-						"Component Expired"
-					),
-				],
-				flags: MessageFlags.Ephemeral,
-			});
-		}
-
-		const embed = basicEmbed(
-			"Confession",
-			confessMessage,
-			null,
-			0xf3b3c3,
-			null,
-			"ID: " + genId + ' | Use "/confess report" to report a confession!', // eslint-disable-line quotes
-			Date.now(),
-			null,
-			null
-		);
-
-		try {
-			const msg = await channel.send({ embeds: [embed] });
-			confessUrl = msg?.url;
-
-			await interaction.reply({
+			await modalSubmit.reply({
 				embeds: [
 					basicEmbed(
 						null,
@@ -130,6 +98,39 @@ export default async (client, interaction) => {
 				],
 				flags: MessageFlags.Ephemeral,
 			});
+			// await modalSubmit.deferUpdate(); 
+		} else {
+			return interaction.reply({
+				embeds: [
+					errEmbed(
+						"You took too long!",
+						null,
+						interaction,
+						"Component Expired"
+					),
+				],
+				flags: MessageFlags.Ephemeral,
+			});
+		}
+
+		const footertext =
+			"ID: " + genId + ' | Use "/confess report" to report a confession!'; // eslint-disable-line quotes
+
+		const embed = basicEmbed(
+			"Confession",
+			`${confessMessage}`,
+			null,
+			"#F3B3C3",
+			null,
+			footertext,
+			null,
+			null,
+			null
+		);
+
+		try {
+			const msg = await channel.send({ embeds: [embed] });
+			confessUrl = msg?.url;
 		} catch (e) {
 			Logger.error(
 				"/confess send",
@@ -160,16 +161,21 @@ export default async (client, interaction) => {
 
 		await confessMetadata.save();
 
-		const desc =
-			`> - **ID:** ${genId}\n` +
-			`> - **Where:** [${interaction.guild.name}](${serverInvite})`;
-		const logEmbed = basicEmbed(
-			"Confession",
-			desc,
+		const fields = [
 			{
 				name: "__Message__",
 				value: confessMessage,
 			},
+		];
+
+		const desc =
+			`> - **ID:** ${genId}\n` +
+			`> - **Where:** [${interaction.guild.name}]( ${serverInvite} )`;
+
+		const logEmbed = basicEmbed(
+			"Confession",
+			desc,
+			...fields,
 			"#2f3136",
 			{
 				name: (

@@ -1,11 +1,12 @@
 import dotenv from "dotenv";
-import "colors";
+
 import { Client, GatewayIntentBits, Partials } from "discord.js";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import Logger from "#utils/logger.js";
 import model from "#models/user.js";
+import chalk from "chalk";
 
 dotenv.config();
 
@@ -93,7 +94,8 @@ async function start() {
 	const endTime = Date.now();
 	Logger.info(
 		"Init",
-		"Completed in " + `${parseInt((endTime - startTime) / 1000)}s`.green
+		"Completed in " +
+			chalk.green(`${parseInt((endTime - startTime) / 1000)}s`)
 	);
 }
 

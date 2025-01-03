@@ -1,5 +1,5 @@
 import Logger from "#utils/logger.js";
-import "colors";
+
 import chalk from "chalk";
 
 export default async () => {

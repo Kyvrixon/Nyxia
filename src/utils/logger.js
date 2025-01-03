@@ -87,7 +87,7 @@ const Logger = {
 
 		if (error instanceof Error && error.stack) {
 			console.log(chalk.grey("[=========BEGIN=========]"));
-			console.error(chalk.bold.dim.red(error.stack));
+			console.error(chalk.bold.red(error.stack));
 			console.log(chalk.grey("[=========END==========]"));
 		}
 		return;

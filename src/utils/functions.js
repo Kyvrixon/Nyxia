@@ -1,7 +1,7 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import Discord, { PermissionFlagsBits, MessageFlags } from "discord.js";
-import "colors";
+
 import fs from "node:fs";
 import user from "#models/user.js";
 import Logger from "./logger.js";
@@ -313,7 +313,7 @@ export const createLeaderboard = async (
  */
 export const footer = (text, pic) => {
 	return {
-		text: `${text || ""}© Kyvrixon™ 2025 | v${packageJson.version}`,
+		text: `${text || ""}\n© Kyvrixon™ 2025 | v${packageJson.version}`,
 		iconURL: pic || null,
 	};
 };

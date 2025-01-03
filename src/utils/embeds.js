@@ -236,6 +236,8 @@ export const basicEmbed = (
 		if (image) {
 			embed.setImage(image);
 		}
+
+		return embed;
 	} catch (e) {
 		Logger.error(
 			"function basicEmbed",
