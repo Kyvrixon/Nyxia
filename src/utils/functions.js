@@ -92,6 +92,12 @@ export const createLeaderboard = async (
 		lb = ["Invalid data was provided"];
 		failed = true;
 	}
+
+	// safeguard
+	if (failed) {
+		return;
+	}
+
 	const generateEmbed = async (start, lb, title) => {
 		const itemsPerPage = single ? 1 : pageCount;
 		const current = lb.slice(start, start + itemsPerPage).join("\n");
@@ -117,12 +123,12 @@ export const createLeaderboard = async (
 
 	const totalPages = Math.ceil(single ? lb.length : lb.length / pageCount);
 	const row = new Discord.ActionRowBuilder()
-		.addComponents(await createButton("back_button", "prev", true))
+		.addComponents(createButton("back_button", "prev", true))
 		.addComponents(
-			await createButton("page_info", `1/${totalPages}`, totalPages === 1)
+			createButton("page_info", `1/${totalPages}`, totalPages === 1)
 		)
 		.addComponents(
-			await createButton("forward_button", "next", lb.length <= pageCount)
+			createButton("forward_button", "next", lb.length <= pageCount)
 		);
 
 	const replyMethod =
@@ -143,11 +149,6 @@ export const createLeaderboard = async (
 				),
 			],
 		});
-	}
-
-	// safeguard
-	if (failed) {
-		return;
 	}
 
 	let currentIndex = 0;
@@ -226,7 +227,7 @@ export const createLeaderboard = async (
 									"forward_button",
 									"next",
 									currentIndex + (single ? 1 : pageCount) >=
-										lb.length
+									lb.length
 								)
 							);
 
@@ -296,7 +297,7 @@ export const createLeaderboard = async (
 					? [rowDisable, extra_components]
 					: [rowDisable],
 			});
-		} catch {}
+		} catch { }
 	});
 };
 
@@ -468,7 +469,7 @@ export const checkPermissions = async (
 	const guild = source.guild;
 	const channel = channelId
 		? guild.channels.cache.get(channelId) ||
-			(await guild.channels.fetch(channelId))
+		(await guild.channels.fetch(channelId))
 		: source.channel;
 
 	if (!channel) {

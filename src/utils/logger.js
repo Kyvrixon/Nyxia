@@ -76,9 +76,6 @@ const Logger = {
 	 * @param {Error | null} error - The error object to log
 	 */
 	error: (title, message, error) => {
-		// ill prob do somethin with the error anyway prob
-		// send to my api to log for later debugging idk
-
 		console.error(
 			chalk.bold.red(`[${title}]`) +
 				chalk.grey(" > ") +

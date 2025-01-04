@@ -205,7 +205,7 @@ export const basicEmbed = (
 	try {
 		const embed = new EmbedBuilder();
 
-		if (author) {
+		if (typeof author == "object" && author) {
 			embed.setAuthor(author);
 		}
 		if (title) {
@@ -219,8 +219,8 @@ export const basicEmbed = (
 		if (footerText) {
 			embed.setFooter(footer(footerText));
 		}
-		if (fields && fields.length > 0) {
-			embed.addFields(fields);
+		if (typeof fields == "array" && fields && fields.length > 0) {
+			embed.setFields(fields);
 		}
 		if (colour) {
 			embed.setColor(colour);

@@ -50,7 +50,7 @@ export default async (client, interaction) => {
 			return interaction.reply({
 				embeds: [
 					errEmbed(
-						"Hm, seems like the channel that was used to setup confessions doesn't exist anymore",
+						"Hm, seems like the channel that was used to setup confessions doesn't exist anymore :( Contact a staff member.",
 						null,
 						interaction,
 						"Invalid Channel"
@@ -98,20 +98,10 @@ export default async (client, interaction) => {
 				],
 				flags: MessageFlags.Ephemeral,
 			});
-			// await modalSubmit.deferUpdate(); 
+			// you dont need to deferUpdate() here
 		} else {
-			return interaction.reply({
-				embeds: [
-					errEmbed(
-						"You took too long!",
-						null,
-						interaction,
-						"Component Expired"
-					),
-				],
-				flags: MessageFlags.Ephemeral,
-			});
-		}
+			// ignore if the modal was dismissed
+		};
 
 		const footertext =
 			"ID: " + genId + ' | Use "/confess report" to report a confession!'; // eslint-disable-line quotes
@@ -152,6 +142,8 @@ export default async (client, interaction) => {
 		const confessMetadata = new confessModel({
 			guildId: interaction.guild.id,
 			ID: genId,
+			c: confessMessage,
+			author: interaction.user.id,
 			meta: {
 				reported: false,
 				deleted: false,
@@ -163,19 +155,16 @@ export default async (client, interaction) => {
 
 		const fields = [
 			{
-				name: "__Message__",
-				value: confessMessage,
+				name: "__Metadata__",
+				value: `> - **ID:** ${genId}\n` +
+					`> - **Where:** [${interaction.guild.name}]( ${serverInvite} )`,
 			},
 		];
 
-		const desc =
-			`> - **ID:** ${genId}\n` +
-			`> - **Where:** [${interaction.guild.name}]( ${serverInvite} )`;
-
 		const logEmbed = basicEmbed(
 			"Confession",
-			desc,
-			...fields,
+			confessMessage,
+			fields,
 			"#2f3136",
 			{
 				name: (

@@ -1,28 +1,44 @@
 import mongoose from "mongoose";
 
 const confessionSchema = new mongoose.Schema({
-	guildId: {
+	guildId: { // guild ID
 		type: String,
 		required: true,
 	},
 
-	ID: {
+	ID: { // unique confession ID
 		type: String,
 		required: true,
 		index: true,
 	},
+ 
+	c: { // content
+		type: String,
+		required: true,
+	},
 
-	meta: {
-		reported: {
+	author: { // author ID
+		type: String,
+	},
+
+	meta: { // important stuff
+		reported: { // reported by a member?
 			type: Boolean,
 		},
-		deleted: {
+		deleted: { // taken down by a dev?
 			type: Boolean,
 		},
-		url: {
+		url: { // url of the msg
 			type: String,
 		},
 	},
+
+	createdAt: { 
+		type: Date,
+		default: Date.now,
+		expires: '30d', // deletes the document after roughly 30 days
+	},
 });
 
-export default mongoose.model("confessions", confessionSchema);
+// Export the model
+export default mongoose.model("confessModel", confessionSchema);

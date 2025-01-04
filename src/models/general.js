@@ -40,4 +40,4 @@ const Schema = new mongoose.Schema({
 	},
 });
 
-export default mongoose.model("general", Schema);
+export default mongoose.model("generalModel", Schema);
